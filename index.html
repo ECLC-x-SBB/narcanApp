@@ -203,7 +203,7 @@ function wire(formId, onSuccess) {
     fetch(GAS_URL, {
       method: 'POST',
       mode: 'no-cors',
-      body: new URLSearchParams(new FormData(form))
+      body: new FormData(form)
     })
     .then(() => onSuccess())
     .catch(err => {
