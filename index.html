@@ -202,16 +202,13 @@ function wire(formId, onSuccess) {
     e.preventDefault();
     fetch(GAS_URL, {
       method: 'POST',
+      mode: 'no-cors',
       body: new URLSearchParams(new FormData(form))
     })
-    .then(r => r.json())
-    .then(data => {
-      if (data.status === 'success') onSuccess();
-      else throw new Error('Submit failed');
-    })
+    .then(() => onSuccess())
     .catch(err => {
       console.error(err);
-      alert('Sorry, there was an error submitting the form.');
+      alert('Sorry, there was an error submitting the form');
     });
   });
 }
