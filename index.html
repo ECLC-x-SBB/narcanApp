@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ECLC Connect and Support</title>
   <style>
-    /* Brand colors sampled from ECLC logo */
     :root {
       --light-aqua: #E7FCFB;
       --mint-green: #2FDBB8;
@@ -66,7 +65,6 @@
     .button:hover {
       background-color: var(--teal);
     }
-    /* Center secondary links */
     .link-button {
       display: block;
       width: fit-content;
@@ -106,7 +104,6 @@
       font-weight: bold;
       font-size: 16px;
     }
-    /* Align checkboxes with labels on Report page */
     #report-form label {
       display: grid;
 	  grid-template-columns: auto 1fr;
@@ -143,16 +140,14 @@
     ul.resources li a:hover {
       text-decoration: underline;
     }
-	/* lay out label text then box on the right */
 .checkbox-label {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* pushes checkbox to the far right */
+  justify-content: space-between; 
   margin-bottom: 12px;
-  font-weight: bold; /* keep same weight as your other labels */
+  font-weight: bold; 
 }
 
-/* optional: make the box a bit smaller so it sits neatly */
 .checkbox-label input[type="checkbox"] {
   width: 20px;
   height: 20px;
@@ -163,12 +158,10 @@ form button.button {
 }
   </style>
   <script>
-    // Page navigation
     function showPage(pageId) {
       document.querySelectorAll('.page').forEach(div => div.classList.remove('active'));
       document.getElementById(pageId).classList.add('active');
     }
-    // Success messages
     function pickupSuccess() {
       const name = document.querySelector('#pickup-form input[name="name"]').value;
       alert(name ? `Thank you, ${name}, for connecting and supporting your community!` :
@@ -183,11 +176,9 @@ form button.button {
       document.getElementById('report-form').reset();
       showPage('home-page');
     }
-    // Exclusive checkboxes
     function toggleExclusive(id) {
       ['reversal','death'].forEach(i => { if (i !== id) document.getElementById(i).checked = false; });
     }
-    // Community Impact data
     const impactData = {
       month: {pickedUp:325,dosesUsed:214,livesSaved:198,hospitalizations:67},
       week:  {pickedUp:75,dosesUsed:48,livesSaved:42,hospitalizations:15},
@@ -203,6 +194,33 @@ form button.button {
         `<p>Hospitalizations After Use: ${data.hospitalizations}</p>`;
     }
     document.addEventListener('DOMContentLoaded', updateImpact);
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbwq-FkfAnPad59hsQ9smrEjtzh_yw89xjmq8hOz1aZcwH67QVWQn4uyK8nLguh_NGUPHw/exec'; 
+
+function wire(formId, onSuccess) {
+  const form = document.getElementById(formId);
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    fetch(GAS_URL, {
+      method: 'POST',
+      body: new URLSearchParams(new FormData(form))
+    })
+    .then(r => r.json())
+    .then(data => {
+      if (data.status === 'success') onSuccess();
+      else throw new Error('Submit failed');
+    })
+    .catch(err => {
+      console.error(err);
+      alert('Sorry, there was an error submitting the form.');
+    });
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  wire('pickup-form', pickupSuccess);
+  wire('report-form', reportSuccess);
+  updateImpact();  
+});
   </script>
 </head>
 <body>
@@ -222,21 +240,64 @@ form button.button {
     </div>
     <div id="picked-up-page" class="page">
       <h2>I Picked Up Narcan</h2>
-      <form id="pickup-form" onsubmit="event.preventDefault(); pickupSuccess();">
+      <form id="pickup-form">
+        <input type="hidden" name="formType" value="pickup">
         <label>How many boxes picked up?</label>
-        <input type="number" min="1" required>
+        <input type="number" name="boxes" min="1" required>
         <label>Age (Optional)</label>
-        <select><option>Prefer not to say</option><option>Under 18</option><option>18-24</option><option>25-34</option><option>35-44</option><option>45-54</option><option>55-64</option><option>65+</option></select>
+        <select name="age">
+          <option value="" disabled selected hidden>Select your age</option>
+          <option value="Under 18">Under 18</option>
+          <option value="18-24">18-24</option>
+          <option value="25-34">25-34</option>
+          <option value="35-44">35-44</option>
+          <option value="45-54">45-54</option>
+          <option value="55-64">55-64</option>
+          <option value="65+">65+</option>
+        </select>
         <label>Sex (Optional)</label>
-        <select><option>Prefer not to say</option><option>Male</option><option>Female</option></select>
+        <select name="sex">
+          <option value="" disabled selected hidden>Select your sex</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
         <label>Ethnicity (Optional)</label>
-        <select><option>Prefer not to say</option><option>White</option><option>Black or African American</option><option>Hispanic or Latino</option><option>Native American or Alaska Native</option><option>Asian</option><option>Pacific Islander or Native Hawaiian</option><option>Multiracial</option></select>
+        <select name="ethnicity">
+          <option value="" disabled selected hidden>Select your ethnicity</option>
+          <option value="White">White</option>
+          <option value="Black or African American">Black or African American</option>
+          <option value="Hispanic or Latino">Hispanic or Latino</option>
+          <option value="Native American or Alaska Native">Native American or Alaska Native</option>
+          <option value="Asian">Asian</option>
+          <option value="Pacific Islander or Native Hawaiian">Pacific Islander or Native Hawaiian</option>
+          <option value="Multiracial">Multiracial</option>
+        </select>
         <label>Education Level (Optional)</label>
-        <select><option>Prefer not to say</option><option>Less than high school</option><option>High school diploma or GED</option><option>Some college</option><option>Associate's degree</option><option>Bachelor's degree</option><option>Graduate or professional degree</option></select>
+        <select name="education">
+          <option value="" disabled selected hidden>Select your education</option>
+          <option value="Less than high school">Less than high school</option>
+          <option value="High school diploma or GED">High school diploma or GED</option>
+          <option value="Some college">Some college</option>
+          <option value="Associate's degree">Associate's degree</option>
+          <option value="Bachelor's degree">Bachelor's degree</option>
+          <option value="Graduate or professional degree">Graduate or professional degree</option>
+        </select>
         <label>Relationship Status (Optional)</label>
-        <select><option>Prefer not to say</option><option>Single</option><option>In a relationship</option><option>Married</option><option>Separated</option><option>Divorced</option><option>Widowed</option></select>
+        <select name="relationship">
+          <option value="" disabled selected hidden>Select relationship status</option>
+          <option value="Single">Single</option>
+          <option value="In a relationship">In a relationship</option>
+          <option value="Married">Married</option>
+          <option value="Separated">Separated</option>
+          <option value="Divorced">Divorced</option>
+          <option value="Widowed">Widowed</option>
+        </select>
         <label>Miscellaneous Comments (Optional)</label>
-        <textarea rows="4"></textarea>
+        <textarea 
+          name="comments" 
+          rows="4"
+          placeholder="Any extra details...? (Optional)">
+        </textarea>
         <label>Your Name (Optional)</label>
         <input type="text" name="name">
         <button type="submit" class="button">Submit</button>
@@ -245,32 +306,50 @@ form button.button {
     </div>
     <div id="report-use-page" class="page">
       <h2>Report Narcan Use</h2>
-      <form id="report-form" onsubmit="event.preventDefault(); reportSuccess();">
-        <label>How many doses administered?</label>
-        <input type="number" min="1" required>
+      <form id="report-form">
+        <input type="hidden" name="formType" value="use">
+        <label>How many doses administered? *Two per box*</label>
+        <input type="number" name="doses" min="1" required>
         <label>Result:</label><br>
         <label class="checkbox-label">
-			Overdose Reversal
-			<input
-				type="checkbox"
-				id="reversal"
-				onclick="toggleExclusive('reversal')">
-		</label><br>
-		<label class="checkbox-label">
-			Overdose Death
-			<input
-				type="checkbox"
-				id="death"
-				onclick="toggleExclusive('death')">
-		</label><br>
+			    Overdose Reversal
+			    <input
+				    type="checkbox"
+            name="result"
+            value="Overdose Reversal"
+				    id="reversal"
+				    onclick="toggleExclusive('reversal')">
+		    </label><br>
+		    <label class="checkbox-label">
+			    Overdose Death
+			    <input
+				    type="checkbox"
+            name="result"
+            value="Overdose Death"
+				    id="death"
+				    onclick="toggleExclusive('death')">
+		    </label><br>
         <label>Was 911 called?</label>
-        <select required><option value="">Select</option><option>Yes</option><option>No</option></select>
+        <select name="called911" required>
+          <option value="">Select</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
         <label>Did they go to the hospital?</label>
-        <select required><option value="">Select</option><option>Yes</option><option>No</option><option>Unknown</option></select>
+        <select name="hospital" required>
+          <option value="">Select</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+          <option value="Unknown">Unknown</option>
+        </select>
         <label>Miscellaneous Comments (Optional)</label>
-        <textarea rows="4"></textarea>
+        <textarea 
+          name="comments" 
+          rows="4" 
+          placeholder="Any extra details...? (Optional)">
+        </textarea>
         <label>Your Name (Optional)</label>
-        <input type="text" name="name">
+        <input type="text" name="name" placeholder="e.g. John Doe">
         <button type="submit" class="button">Submit</button>
       </form>
       <div class="back-button" onclick="showPage('home-page')">⬅️ Back to Home</div>
