@@ -218,6 +218,35 @@ document.addEventListener('DOMContentLoaded', () => {
   wire('report-form', reportSuccess);
   updateImpact();  
 });
+
+async function loadDevotional() {
+  try {
+    const resp = await fetch('/devotions.json');
+    const all  = await resp.json();
+
+    const now = new Date();
+    const key = `${now.getMonth()+1}-${now.getDate()}`;
+
+    const today = all[key] || {
+      verse: '“God is our refuge...” (Psalm 46:1)',
+      text:  'Unable to find today’s devotional. Please check back later.'
+    };
+
+    document.getElementById('devotional-verse').textContent = today.verse;
+    document.getElementById('devotional-text').textContent  = today.text;
+
+  } catch (err) {
+    console.error('Error loading devotional:', err);
+    document.getElementById('devotional-verse').textContent =
+      'Error loading devotional';
+    document.getElementById('devotional-text').textContent = '';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  
+  loadDevotional();
+});
   </script>
 </head>
 <body>
@@ -381,12 +410,8 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
     <div id="devotional-page" class="page">
       <h2>Recovery Devotional</h2>
-      <p>"The Lord is near to the brokenhearted and saves the crushed in spirit." (Psalm 34:18)</p>
-      <p><strong>Daily Devotional - Rebuilding from Within</strong><br>
-      Every step you take toward recovery, no matter how small, is a step of immense courage.<br>
-      Remember: healing isn't about becoming someone new — it's about returning to the person you were always meant to be.<br>
-      You are not defined by your past, only by the strength you show in moving forward.<br>
-      Today, choose to breathe, choose to believe, and choose to rise again.</p>
+      <p id="devotional-verse">Loading verse...</p>
+      <p id="devotional-text">Loading devotional...</p>
       <div class="back-button" onclick="showPage('home-page')">⬅️ Back to Home</div>
     </div>
   </main>
