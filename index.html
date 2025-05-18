@@ -233,7 +233,7 @@ async function loadDevotional() {
     };
 
     document.getElementById('devotional-verse').textContent = today.verse;
-    const container = document.getElementByID('devotional-text');
+    const container = document.getElementById('devotional-text');
     container.innerHTML = '';
 
     today.text.split('\\n\\n').forEach(para => {
