@@ -233,18 +233,26 @@ async function loadDevotional() {
     };
 
     document.getElementById('devotional-verse').textContent = today.verse;
-    document.getElementById('devotional-text').textContent  = today.text;
+    const container = document.getElementID('devotional-text');
+    container.innerHTML = '';
+
+    today.text.split('\\n\\n').forEach(para => {
+      const p = document.createElement('p');
+      p.textContent = para;
+      container.appendChild(p);
+    });
 
   } catch (err) {
     console.error('Error loading devotional:', err);
     document.getElementById('devotional-verse').textContent =
       'Error loading devotional';
-    document.getElementById('devotional-text').textContent = '';
+    document.getElementById('devotional-text').innerHTML = 
+      "<p>Sorry, we couldn't load today's devotional. Please try again later.</p>";
   }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  
+
   loadDevotional();
 });
   </script>
@@ -411,7 +419,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div id="devotional-page" class="page">
       <h2>Recovery Devotional</h2>
       <p id="devotional-verse">Loading verse...</p>
-      <p id="devotional-text">Loading devotional...</p>
+      <div id="devotional-text">Loading devotional...</div>
       <div class="back-button" onclick="showPage('home-page')">⬅️ Back to Home</div>
     </div>
   </main>
