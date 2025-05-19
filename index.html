@@ -165,6 +165,11 @@ form button.button {
   font-weight: bold;
   margin-top: 1em;
 }
+#dev-date {
+  font-weight: bold;
+  font-size: 1.25rem;
+  margin: 0.5em 0;
+}
   </style>
   <script>
     function showPage(pageId) {
@@ -253,7 +258,8 @@ async function loadDevotional(d = new Date()) {
     });   
     document.getElementById('dev-date').textContent = 
       d.toLocaleDateString(undefined, {
-        month: 'long', day: 'numeric', year: 'numeric'
+        month: 'long', 
+        day: 'numeric'
       });
   } catch (err) {
     console.error('Error loading devotional:', err);
