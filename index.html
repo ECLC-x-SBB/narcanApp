@@ -208,12 +208,7 @@ form button.button {
       const s = document.createElement('script');
       s.src = `${GAS_URL}?action=impact&range=${range}&callback=handleImpact`;
       document.body.appendChild(s);
-    }
-    document.addEventListener('DOMContentLoaded', () => {
-      wire('pickup-form', pickupSuccess);
-      wire('report-form', reportSuccess);
-      updateImpact();
-    });
+    };
 
 function wire(formId, onSuccess) {
   const form = document.getElementById(formId);
