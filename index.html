@@ -170,6 +170,11 @@ form button.button {
   font-size: 1.25rem;
   margin: 0.5em 0;
 }
+textarea{
+  vertical-align: top;
+  padding-top: 8px;
+  line-height: 1.4;
+}
   </style>
   <script>
     const GAS_URL = 'https://script.google.com/macros/s/AKfycbxRVZcd0nZnjTBvwPTaHIsUck5wKHU8iEfmYaazWHIuqR0p8kLG6BrwqC-VCwNlHwRERg/exec'; 
@@ -285,7 +290,14 @@ document.addEventListener('DOMContentLoaded', () => {
 <body>
   <div class="header">
     <div class="header-left">Support. Educate.</div>
-    <img src="eclc-logo.png" alt="ECLC Logo" class="logo">
+    <img 
+      src="eclc-logo.png" 
+      alt="ECLC Logo" 
+      class="logo"
+      id="site-logo"
+      style="cursor:pointer;"
+      onClick="showPage('home-page')"
+      />
     <div class="header-right">Advocate. Resilience.</div>
   </div>
   <main>
@@ -355,8 +367,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <textarea 
           name="comments" 
           rows="4"
-          placeholder="Any extra details...? (Optional)">
-        </textarea>
+          placeholder="Any extra details...? (Optional)"></textarea>
         <label>Your Name (Optional)</label>
         <input type="text" name="name">
         <button type="submit" class="button">Submit</button>
@@ -405,8 +416,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <textarea 
           name="comments" 
           rows="4" 
-          placeholder="Any extra details...? (Optional)">
-        </textarea>
+          placeholder="Any extra details...? (Optional)"></textarea>
         <label>Your Name (Optional)</label>
         <input type="text" name="name" placeholder="e.g. John Doe">
         <button type="submit" class="button">Submit</button>
