@@ -172,6 +172,16 @@ form button.button {
 }
   </style>
   <script>
+    const GAS_URL = 'https://script.google.com/macros/s/AKfycbxRVZcd0nZnjTBvwPTaHIsUck5wKHU8iEfmYaazWHIuqR0p8kLG6BrwqC-VCwNlHwRERg/exec'; 
+
+    function handleImpact(data) {
+      document.getElementById('impact-stats').innerHTML = `
+        <p>Total Boxes Picked Up: ${data.pickedUp}</p>
+        <p>Total Doses Used: ${data.dosesUsed}</p>
+        <p>Lives Saved: ${data.livesSaved}</p>
+        <p>Hospitalizations After Use: ${data.hospitalizations}</p>
+      `;
+    }
     function showPage(pageId) {
       document.querySelectorAll('.page').forEach(div => div.classList.remove('active'));
       document.getElementById(pageId).classList.add('active');
@@ -193,23 +203,17 @@ form button.button {
     function toggleExclusive(id) {
       ['reversal','death'].forEach(i => { if (i !== id) document.getElementById(i).checked = false; });
     }
-    const impactData = {
-      month: {pickedUp:325,dosesUsed:214,livesSaved:198,hospitalizations:67},
-      week:  {pickedUp:75,dosesUsed:48,livesSaved:42,hospitalizations:15},
-      year:  {pickedUp:4000,dosesUsed:3200,livesSaved:3000,hospitalizations:800}
-    };
     function updateImpact() {
-      const range = document.getElementById('impact-range').value;
-      const data  = impactData[range];
-      document.getElementById('impact-stats').innerHTML =
-        `<p>Total Boxes Picked Up: ${data.pickedUp}
-        </p>` +
-        `<p>Total Doses Used: ${data.dosesUsed}</p>` +
-        `<p>Lives Saved: ${data.livesSaved}</p>` +
-        `<p>Hospitalizations After Use: ${data.hospitalizations}</p>`;
+      const range = document.getElementById('impact-range').value
+      const s = document.createElement('script');
+      s.src = `${GAS_URL}?action=impact&range=${range}&callback=handleImpact`;
+      document.body.appendChild(s);
     }
-    document.addEventListener('DOMContentLoaded', updateImpact);
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbxRVZcd0nZnjTBvwPTaHIsUck5wKHU8iEfmYaazWHIuqR0p8kLG6BrwqC-VCwNlHwRERg/exec'; 
+    document.addEventListener('DOMContentLoaded', () => {
+      wire('pickup-form', pickupSuccess);
+      wire('report-form', reportSuccess);
+      updateImpact();
+    });
 
 function wire(formId, onSuccess) {
   const form = document.getElementById(formId);
@@ -435,8 +439,8 @@ document.addEventListener('DOMContentLoaded', () => {
       <h2>Community Impact</h2>
       <label for="impact-range">Select Range:</label><br>
       <select id="impact-range" onchange="updateImpact()">
-        <option value="month" selected>This Month</option>
         <option value="week">This Week</option>
+        <option value="month" selected>This Month</option>
         <option value="year">This Year</option>
       </select>
       <div id="impact-stats"></div>
