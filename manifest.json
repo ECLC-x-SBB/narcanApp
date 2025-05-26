@@ -1,0 +1,20 @@
+{
+    "name": "ECLC Recovery",
+    "short_name": "ECLC",
+    "start_url": "/?utm_source=app",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#0b3d91",
+    "icons": [
+        {
+            "src": "assets/icons/eclc-logo192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/assets/icons/eclc-logo512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
