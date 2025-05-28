@@ -111,28 +111,8 @@
       font-size: 16px;
       background: transparent;
     }
-    form {
-      max-width: 360px;
-      margin: auto;
-      text-align: left;
-    }
     form label {
       font-weight: bold;
-      font-size: 16px;
-    }
-    #report-form label {
-      display: grid;
-	  grid-template-columns: auto 1fr;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-    form input, form select, form textarea {
-      width: 100%;
-      padding: 8px;
-      margin: 4px 0 16px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
       font-size: 16px;
     }
     #impact-range {
@@ -156,10 +136,6 @@
     ul.resources li a:hover {
       text-decoration: underline;
     }
-form button.button {
-	display: block;
-	margin: 24px auto;
-}
 #devotional-verse {
   font-weight: bold;
   font-style: italic;
@@ -210,27 +186,22 @@ textarea{
     display: none !important;
   }
 }
-#picked-up-page main form {
+#pickup-form,
+#report-form {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-#picked-up-page main form input[type="text"],
-#picked-up-page main form select {
+#pickup-form input[type="number"],
+#pickup-form input[type="text"],
+#pickup-form select,
+#report-form input[type="number"],
+#report-form input[type="text"],
+#report-form select {
   width: auto;
-  max-width: 240px;
+  max-width: 120px;
   margin: 8px 0 24px;
-}
-#report-use-page main form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-#report-use-page main form input[type="text"],
-#report-use-page main form select {
-  width: auto;
-  max-width: 240px;
-  margin: 8px 0 24px;
+  display: block;
 }
 .radio-group {
   display: flex;
