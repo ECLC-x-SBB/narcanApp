@@ -68,9 +68,15 @@
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
       cursor: pointer;
       transition: background-color 0.3s;
+      max-width: 300px;
+      width: 100%;
     }
     .button:hover {
       background-color: var(--teal);
+    }
+    .button:focus {
+      outline: 3px solid var(--text-dark);
+      outline-offset: 2px;
     }
     .link-button {
       display: block;
@@ -202,138 +208,13 @@ textarea{
   transform: translateX(-50%);
   z-index: 1000;
 }
-  </style>
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-        .catch(err => console.error('SW registration failed:', err));
-      });
-    }
-    let deferredPrompt;
-    const installBtn = document.getElementById('install-btn');
-    const isMobile = /Mobi|Android|iPhone|iPad|iPod|/i.test(navigator.userAgent);
-    
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      if (isMobile) {
-        installBtn.style.display = 'block';
-      }
-    });
-    installBtn.addEventListener('click', async () => {
-      if (!deferredPrompt) return;
-      installBtn.disabled = true;
-      deferredPrompt.prompt();
-      const choice = await deferredPrompt.userChoice;
-      console.log('PWA install choice:', choice.outcome);
-      deferredPrompt = null;
-      installBtn.style.display = 'none'
-    });
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbxRVZcd0nZnjTBvwPTaHIsUck5wKHU8iEfmYaazWHIuqR0p8kLG6BrwqC-VCwNlHwRERg/exec'; 
-    function handleImpact(data) {
-      document.getElementById('impact-stats').innerHTML = `
-        <p>Total Boxes Picked Up: ${data.pickedUp}</p>
-        <p>Total Doses Used: ${data.dosesUsed}</p>
-        <p>Lives Saved: ${data.livesSaved}</p>
-        <p>Hospitalizations After Use: ${data.hospitalizations}</p>
-      `;
-    }
-    function showPage(pageId) {
-      document.querySelectorAll('.page').forEach(div => div.classList.remove('active'));
-      document.getElementById(pageId).classList.add('active');
-    }
-    function pickupSuccess() {
-      const name = document.querySelector('#pickup-form input[name="name"]').value;
-      alert(name ? `Thank you, ${name}, for connecting and supporting your community!` :
-                   'Thank you for connecting and supporting your community!');
-      document.getElementById('pickup-form').reset();
-      showPage('home-page');
-    }
-    function reportSuccess() {
-      const name = document.querySelector('#report-form input[name="name"]').value;
-      alert(name ? `Thank you, ${name}, for helping save lives!` :
-                   'Thank you for helping save lives!');
-      document.getElementById('report-form').reset();
-      showPage('home-page');
-    }
-    function toggleExclusive(id) {
-      ['reversal','death'].forEach(i => { if (i !== id) document.getElementById(i).checked = false; });
-    }
-    function updateImpact() {
-      const range = document.getElementById('impact-range').value
-      const s = document.createElement('script');
-      s.src = `${GAS_URL}?action=impact&range=${range}&callback=handleImpact`;
-      document.body.appendChild(s);
-    };
-function wire(formId, onSuccess) {
-  const form = document.getElementById(formId);
-  form.addEventListener('submit', e => {
-    e.preventDefault();
-    fetch(GAS_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      body: new FormData(form)
-    })
-    .then(() => onSuccess())
-    .catch(err => {
-      console.error(err);
-      alert('Sorry, there was an error submitting the form');
-    });
-  });
-}
-document.addEventListener('DOMContentLoaded', () => {
-  wire('pickup-form', pickupSuccess);
-  wire('report-form', reportSuccess);
-  updateImpact();  
-});
-let devosData = null;
-let currentDate = new Date();
-async function loadDevotional(d = new Date()) {
-  try {
-    if (!devosData) {
-      const resp = await fetch('/devotions.json');
-      devosData = await resp.json();
-    }
-    const key = `${d.getMonth()+1}-${d.getDate()}`;
-    const today = devosData[key] || {
-      verse: '"God is our refuge..." (Psalm 46:1)',
-      text: "Unable to find today's devotional. Please check back later."
-    };
-    document.getElementById('devotional-verse').textContent = today.verse;
-    const container = document.getElementById('devotional-text');
-    container.innerHTML = '';
-    today.text.split('\\n\\n').forEach(para => {
-      const p = document.createElement('p');
-      p.textContent = para;
-      container.appendChild(p);
-    });   
-    document.getElementById('dev-date').textContent = 
-      d.toLocaleDateString(undefined, {
-        month: 'long', 
-        day: 'numeric'
-      });
-  } catch (err) {
-    console.error('Error loading devotional:', err);
-    document.getElementById('dev-date').textContent = '';
-    document.getElementById('devotional-verse').textContent =
-      'Error loading devotional';
-    document.getElementById('devotional-text').innerHTML = 
-      "<p>Sorry, we couldn't load today's devotional. Please try again later.</p>";
+@media (max-width: 360px) {
+  .button {
+    padding: 12px 24px;
+    font-size: 18px;
   }
 }
-function shiftDay(offset) {
-  currentDate.setDate(currentDate.getDate() + offset);
-  loadDevotional(currentDate);
-}
-document.addEventListener('DOMContentLoaded', () => {
-  loadDevotional(currentDate);
-  document.getElementById('prev-day')
-    .addEventListener('click', () => shiftDay(-1));
-  document.getElementById('next-day')
-    .addEventListener('click', () => shiftDay(1));
-});
-  </script>
+  </style>
 </head>
 <body>
   <div class="header">
@@ -356,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <button class="link-button" onclick="showPage('resources-page')">Community Resources</button>
       <button class="link-button" onclick="showPage('impact-page')">Community Impact</button>
       <button class="link-button" onclick="showPage('devotional-page')">Recovery Devotional</button>
-      <button id="install-btn" class="button">Connect and Support with the ECLC App!</button>
+      <button class="button" id="install-btn" style="display:none">Connect and Support with the ECLC App!</button>
     </div>
     <div id="picked-up-page" class="page">
       <h2>I Picked Up Narcan</h2>
@@ -530,5 +411,136 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
   </main>
   <footer>Connect and Support!</footer>
+    <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+        .catch(err => console.error('SW registration failed:', err));
+      });
+    }
+    let deferredPrompt;
+    const installBtn = document.getElementById('install-btn');
+    const isMobile = /Mobi|Android|iPhone|iPad|iPod|/i.test(navigator.userAgent);
+    
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      if (isMobile) {
+        installBtn.style.display = 'inline-block';
+      }
+    });
+    installBtn.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      installBtn.disabled = true;
+      deferredPrompt.prompt();
+      const choice = await deferredPrompt.userChoice;
+      console.log('PWA install choice:', choice.outcome);
+      deferredPrompt = null;
+      installBtn.style.display = 'none'
+    });
+    const GAS_URL = 'https://script.google.com/macros/s/AKfycbxRVZcd0nZnjTBvwPTaHIsUck5wKHU8iEfmYaazWHIuqR0p8kLG6BrwqC-VCwNlHwRERg/exec'; 
+    function handleImpact(data) {
+      document.getElementById('impact-stats').innerHTML = `
+        <p>Total Boxes Picked Up: ${data.pickedUp}</p>
+        <p>Total Doses Used: ${data.dosesUsed}</p>
+        <p>Lives Saved: ${data.livesSaved}</p>
+        <p>Hospitalizations After Use: ${data.hospitalizations}</p>
+      `;
+    }
+    function showPage(pageId) {
+      document.querySelectorAll('.page').forEach(div => div.classList.remove('active'));
+      document.getElementById(pageId).classList.add('active');
+    }
+    function pickupSuccess() {
+      const name = document.querySelector('#pickup-form input[name="name"]').value;
+      alert(name ? `Thank you, ${name}, for connecting and supporting your community!` :
+                   'Thank you for connecting and supporting your community!');
+      document.getElementById('pickup-form').reset();
+      showPage('home-page');
+    }
+    function reportSuccess() {
+      const name = document.querySelector('#report-form input[name="name"]').value;
+      alert(name ? `Thank you, ${name}, for helping save lives!` :
+                   'Thank you for helping save lives!');
+      document.getElementById('report-form').reset();
+      showPage('home-page');
+    }
+    function toggleExclusive(id) {
+      ['reversal','death'].forEach(i => { if (i !== id) document.getElementById(i).checked = false; });
+    }
+    function updateImpact() {
+      const range = document.getElementById('impact-range').value
+      const s = document.createElement('script');
+      s.src = `${GAS_URL}?action=impact&range=${range}&callback=handleImpact`;
+      document.body.appendChild(s);
+    };
+function wire(formId, onSuccess) {
+  const form = document.getElementById(formId);
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    fetch(GAS_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      body: new FormData(form)
+    })
+    .then(() => onSuccess())
+    .catch(err => {
+      console.error(err);
+      alert('Sorry, there was an error submitting the form');
+    });
+  });
+}
+document.addEventListener('DOMContentLoaded', () => {
+  wire('pickup-form', pickupSuccess);
+  wire('report-form', reportSuccess);
+  updateImpact();  
+});
+let devosData = null;
+let currentDate = new Date();
+async function loadDevotional(d = new Date()) {
+  try {
+    if (!devosData) {
+      const resp = await fetch('/devotions.json');
+      devosData = await resp.json();
+    }
+    const key = `${d.getMonth()+1}-${d.getDate()}`;
+    const today = devosData[key] || {
+      verse: '"God is our refuge..." (Psalm 46:1)',
+      text: "Unable to find today's devotional. Please check back later."
+    };
+    document.getElementById('devotional-verse').textContent = today.verse;
+    const container = document.getElementById('devotional-text');
+    container.innerHTML = '';
+    today.text.split('\\n\\n').forEach(para => {
+      const p = document.createElement('p');
+      p.textContent = para;
+      container.appendChild(p);
+    });   
+    document.getElementById('dev-date').textContent = 
+      d.toLocaleDateString(undefined, {
+        month: 'long', 
+        day: 'numeric'
+      });
+  } catch (err) {
+    console.error('Error loading devotional:', err);
+    document.getElementById('dev-date').textContent = '';
+    document.getElementById('devotional-verse').textContent =
+      'Error loading devotional';
+    document.getElementById('devotional-text').innerHTML = 
+      "<p>Sorry, we couldn't load today's devotional. Please try again later.</p>";
+  }
+}
+function shiftDay(offset) {
+  currentDate.setDate(currentDate.getDate() + offset);
+  loadDevotional(currentDate);
+}
+document.addEventListener('DOMContentLoaded', () => {
+  loadDevotional(currentDate);
+  document.getElementById('prev-day')
+    .addEventListener('click', () => shiftDay(-1));
+  document.getElementById('next-day')
+    .addEventListener('click', () => shiftDay(1));
+});
+  </script>
 </body>
 </html>
