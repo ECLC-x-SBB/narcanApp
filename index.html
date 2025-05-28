@@ -18,10 +18,19 @@
       --teal: #15B2AE;
       --text-dark: #002B56;
     }
+    html {
+      height: 100%;
+      background: linear-gradient(
+        to bottom right,
+          var(--light-aqua),
+          var(--mint-green),
+          var(--teal),
+      );
+    }
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: linear-gradient(to bottom right, var(--light-aqua), var(--mint-green), var(--teal));
+      background: none;
       color: var(--text-dark);
       display: flex;
       flex-direction: column;
@@ -33,10 +42,6 @@
       padding: 16px;
       background: transparent;
       flex-shrink: 0;
-      width: 90%;
-      max-width: 480px;
-      margin: 2rem auto;
-      box-sizing: border-box;
     }
     .header-left {
       flex: 1;
@@ -182,6 +187,7 @@
   }
 }
 .form-container {
+  box-sizing: border-box;
   max-width: 480px;
   width: 90%;
   margin: 2rem auto;
