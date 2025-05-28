@@ -12,6 +12,36 @@
   <link rel="apple-touch-icon" sizes="167x167" href="/assets/icons/eclc-logo512-test.png">
   <title>ECLC Connect and Support</title>
   <style>
+    @font-face {
+      font-family: 'Inter Variable';
+      src: url('/assets/fonts/InterVariable.woff2') format('woff2'), url('/assets/fonts/InterVariable.ttf') format('truetype');
+      font-weight: 100 900;
+      font-stretch: 100%;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Inter Text';
+      font-weight: 400 700;
+      font-style: normal;
+      font-display: swap;
+      src:
+        url('/assets/fonts/Inter-Regular.woff2') format('woff2'),
+        url('/assets/fonts/Inter-Medium.woff2') format('woff2'),
+        url('/assets/fonts/Inter-SemiBold.woff2') format('woff2'),
+        url('/assets/fonts/Inter-Bold.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter Display';
+      font-weight: 400 700;
+      font-style: normal;
+      font-display: swap;
+      src: 
+        url('/assets/fonts/InterDisplay-Regular.woff2') format('woff2'),
+        url('/assets/fonts/InterDisplay-Medium.woff2') format('woff2'),
+        url('/assets/fonts/InterDisplay-SemiBold.woff2') format('woff2'),
+        url('/assets/fonts/InterDisplay-Bold.woff2') format('woff2');
+    }
     :root {
       --light-aqua: #E7FCFB;
       --mint-green: #2FDBB8;
@@ -26,22 +56,46 @@
           var(--teal)
       );
       background-repeat: no-repeat;
+      font-family: 'Inter Variable', sans-serif;
+      font-optical-sizing: auto;
     }
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
       background: none;
       color: var(--text-dark);
       display: flex;
       flex-direction: column;
       min-height: 100vh;
     }
+    input,
+    select,
+    textarea {
+      font-family: 'Inter Text', sans-serif;
+      font-weight: 400;
+    }
+    label,
+    legend {
+      font-family: 'Inter Text', sans-serif;
+      font-weight: 500;
+    }
+    .button,
+    button {
+      font-family: 'Inter Text', sans-serif;
+      font-weight: 600;
+    }
+    h1, .h1,
+    h2, .h2 {
+      font-family: 'Inter Display', sans-serif;
+      font-weight: 700;
+    }
     .header {
       display: flex;
       align-items: center;
       padding: 16px;
-      background: transparent;
       flex-shrink: 0;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
     }
     .header-left {
       flex: 1;
@@ -82,6 +136,8 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      position: relative;
+      overflow: hidden;
     }
     .button:hover {
       background-color: var(--teal);
@@ -89,6 +145,23 @@
     .button:focus {
       outline: 3px solid var(--text-dark);
       outline-offset: 2px;
+    }
+    .button:active {
+      transform: scale(0.97);
+    }
+    .button .ripple {
+      position: absolute;
+      border-radius: 50%;
+      transform: scale(0);
+      pointer-events: none;
+      background-color: rgba(255, 255, 255, 0.6);
+      animation: ripple 600ms ease-out;
+    }
+    @keyframes ripple {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
     }
     .link-button {
       display: block;
@@ -196,6 +269,12 @@
   backdrop-filter: blur(8px);
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+@keyframes fadeInUp {
+  to {opacity: 1; transform: translateY(0); }
 }
 .form-container label {
   display: block;
@@ -514,7 +593,7 @@
         .catch(err => console.error('SW registration failed:', err));
       });
     }
-    const isiOS = /iPhone|iPad|iPod/.test(navigator.userAgent) && !window.MSStream;
+    const isiOS = /iP(hone|ad|od)/.test(navigator.userAgent) && !window.MSStream;
     let deferredPrompt;
     const installBtn = document.getElementById('install-btn');
     const isMobile = /Mobi|Android|iPhone|iPad|iPod|/i.test(navigator.userAgent);
@@ -639,13 +718,26 @@ document.addEventListener('DOMContentLoaded', () => {
     .addEventListener('click', () => shiftDay(1));
 });
 window.addEventListener('DOMContentLoaded', () => {
-  if (isiOS) {
+  if (isiOS && !window.navigator.standalone) {
     const tip = document.createElement('div');
     tip.className = 'ios-install-tip';
-    tip.innerHTML = 'To install: tap Share → Add to Home Screen';
+    tip.textContent = 'To install: tap Share → Add to Home Screen';
     document.body.append(tip);
-    setTimeout(() => tip.remove(), 8000);
+    setTimeout(() => tip.remove(), 15000);
   }
+});
+document.querySelectorAll('.button').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    const ripple = document.createElement('span');
+    ripple.classList.add('ripple');
+    const rect = this.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    ripple.style.width = ripple.style.height = `${size}px`;
+    ripple.style.left = `${e.clientX - rect.left - size/2}px`;
+    ripple.style.top = `${e.clientY - rect.top - size/2}px`;
+    this.appendChild(ripple);
+    ripple.addEventListener('animationed', () => ripple.remove());
+  });
 });
   </script>
 </body>
