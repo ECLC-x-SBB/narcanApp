@@ -98,8 +98,7 @@
         var(--light-aqua),
         var(--mint-green),
         var(--teal)
-      );
-      background-attachment: fixed;
+      ) fixed no-repeat;
       background-size: 100vw 100vh;
       background-position: top left;
       backdrop-filter: blur(6px);
@@ -163,7 +162,8 @@
       transform: scale(0);
       pointer-events: none;
       background-color: rgba(255, 255, 255, 0.6);
-      animation: ripple 600ms ease-out;
+      z-index: 1;
+      animation: ripple 1000ms ease-out;
     }
     @keyframes ripple {
       to {
