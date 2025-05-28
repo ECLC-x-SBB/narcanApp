@@ -99,6 +99,9 @@
         var(--mint-green),
         var(--teal)
       );
+      background-attachment: fixed;
+      background-size: 100vw 100vh;
+      background-position: top left;
       backdrop-filter: blur(6px);
       box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
     }
@@ -737,8 +740,7 @@ document.querySelectorAll('.button').forEach(btn => {
     console.log('ripple click on', this);
     const ripple = document.createElement('span');
     ripple.classList.add('ripple');
-    const rect = this.getBoundingClientRect();
-    const size = Math.max(rect.width, rect.height);
+    const size = Math.max(this.offsetWidth, this.offsetHeight);
     ripple.style.width = ripple.style.height = `${size}px`;
     ripple.style.left = `${e.clientX - rect.left - size/2}px`;
     ripple.style.top = `${e.clientY - rect.top - size/2}px`;
