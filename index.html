@@ -4,7 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#0b3d91"
+  <meta name="theme-color" content="#0b3d91">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="ECLC">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/eclc-logo192.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="/assets/icons/eclc-logo512.png">
   <title>ECLC Connect and Support</title>
   <style>
     :root {
@@ -196,8 +201,23 @@ textarea{
         navigator.serviceWorker.register('/sw.js');
       });
     }
+    let deferredPrompt;
+    
+    window.addEventListener('beforeinstallprompt', e=> {
+      e.preventDefault();
+      deferredPrompt = e;
+      const btn = document.getElementById('install-btn');
+      if (btn) btn.style.display = 'block';
+    });
+    document.getElementById('instal-btn').addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      const choice = await deferredPrompt.userChoice;
+      console.log('User choice:', choice.outcome);
+      deferredPrompt = null;
+      document.getElementById('install-btn').style.display = 'none';
+    });
     const GAS_URL = 'https://script.google.com/macros/s/AKfycbxRVZcd0nZnjTBvwPTaHIsUck5wKHU8iEfmYaazWHIuqR0p8kLG6BrwqC-VCwNlHwRERg/exec'; 
-
     function handleImpact(data) {
       document.getElementById('impact-stats').innerHTML = `
         <p>Total Boxes Picked Up: ${data.pickedUp}</p>
@@ -233,7 +253,6 @@ textarea{
       s.src = `${GAS_URL}?action=impact&range=${range}&callback=handleImpact`;
       document.body.appendChild(s);
     };
-
 function wire(formId, onSuccess) {
   const form = document.getElementById(formId);
   form.addEventListener('submit', e => {
@@ -250,16 +269,13 @@ function wire(formId, onSuccess) {
     });
   });
 }
-
 document.addEventListener('DOMContentLoaded', () => {
   wire('pickup-form', pickupSuccess);
   wire('report-form', reportSuccess);
   updateImpact();  
 });
-
 let devosData = null;
 let currentDate = new Date();
-
 async function loadDevotional(d = new Date()) {
   try {
     if (!devosData) {
@@ -321,6 +337,7 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>
   <main>
     <div id="home-page" class="page active">
+      <button id="install-btn" style="display:none;">Connect and Support with the ECLC App!</button>
       <button class="button" onclick="showPage('picked-up-page')">I Picked Up Narcan</button>
       <button class="button" onclick="showPage('report-use-page')">Report Narcan Use</button>
       <button class="link-button" onclick="showPage('contact-page')">Contact ECLC</button>
