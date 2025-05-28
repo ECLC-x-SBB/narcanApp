@@ -4,8 +4,8 @@ const ASSETS = [
     '/index.html',
     '/devotions.json',
     '/eclc-logo.png',
-    '/assets/icons/eclc-logo192.png',
-    '/assets/icons/eclc-logo512.png',
+    '/assets/icons/eclc-logo192-test.png',
+    '/assets/icons/eclc-logo512-test.png',
     '/manifest.json'
 ];
 

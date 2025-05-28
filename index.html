@@ -8,8 +8,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="ECLC">
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/eclc-logo192.png">
-  <link rel="apple-touch-icon" sizes="167x167" href="/assets/icons/eclc-logo512.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/eclc-logo192-test.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="/assets/icons/eclc-logo512-test.png">
   <title>ECLC Connect and Support</title>
   <style>
     :root {
@@ -70,6 +70,9 @@
       transition: background-color 0.3s;
       max-width: 300px;
       width: 100%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
     .button:hover {
       background-color: var(--teal);
@@ -154,16 +157,16 @@
       text-decoration: underline;
     }
 .checkbox-label {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between; 
-  margin-bottom: 12px;
-  font-weight: bold; 
+  justify-content: flex-start; 
+  margin: 0 24px 12px 0;
+  font-weight: bold;
+  font-size: 16px; 
 }
 
 .checkbox-label input[type="checkbox"] {
-  width: 20px;
-  height: 20px;
+  margin-left: 8px;
 }
 form button.button {
 	display: block;
@@ -213,6 +216,33 @@ textarea{
     padding: 12px 24px;
     font-size: 18px;
   }
+}
+@media (min-width: 768px) {
+  #install-btn {
+    display: none !important;
+  }
+}
+#picked-up-page main form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#picked-up-page main form input[type="text"],
+#picked-up-page main form select {
+  width: auto;
+  max-width: 240px;
+  margin: 8px 0 24px;
+}
+#report-use-page main form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#report-use-page main form input[type="text"],
+#report-use-page main form select {
+  width: auto;
+  max-width: 240px;
+  margin: 8px 0 24px;
 }
   </style>
 </head>
