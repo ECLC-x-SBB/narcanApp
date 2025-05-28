@@ -111,10 +111,6 @@
       font-size: 16px;
       background: transparent;
     }
-    form label {
-      font-weight: bold;
-      font-size: 16px;
-    }
     #impact-range {
       margin-bottom: 16px;
       font-size: 16px;
@@ -150,11 +146,6 @@
   font-size: 1.25rem;
   margin: 0.5em 0;
 }
-textarea{
-  vertical-align: top;
-  padding-top: 8px;
-  line-height: 1.4;
-}
 .map-container {
   max-width: 360px;
   margin: 0 auto 16px;
@@ -186,42 +177,61 @@ textarea{
     display: none !important;
   }
 }
-#pickup-form,
-#report-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.form-container {
+  max-width: 480px;
+  width: 90%;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+.form-container label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+.form-container input,
+.form-container select,
+.form-container textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  box-sizing: border-box;
 }
 #pickup-form input[type="number"],
-#pickup-form input[type="text"],
-#pickup-form select,
-#report-form input[type="number"],
-#report-form input[type="text"],
-#report-form select {
-  width: auto;
-  max-width: 120px;
-  margin: 8px 0 24px;
-  display: block;
+#report-form input[type="number"] {
+  max-width: 100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.form-container .button {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.125rem;
+  max-width: none;
+  margin: 0;
 }
 .radio-group {
   display: flex;
+  gap: 1rem;
   flex-wrap: wrap;
-  gap: 16px;
-  margin-bottom: 24px;
+  margin-bottom: 1.5rem;
   border: none;
   padding: 0;
 }
 .radio-group legend {
-  font-weight: bold;
-  margin-right: 16px;
-  font-size: 1rem;
-  align-self: center;
+  width: 100%;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
 }
 .radio-label {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 1rem;
+  gap: 0.5rem;
   cursor: pointer;
 }
 .radio-label input[type="radio"] {
@@ -255,110 +265,153 @@ textarea{
       <button class="button" id="install-btn" style="display:none">Connect and Support with the ECLC App!</button>
     </div>
     <div id="picked-up-page" class="page">
-      <h2>I Picked Up Narcan</h2>
-      <form id="pickup-form">
-        <input type="hidden" name="formType" value="pickup">
-        <label>How many boxes picked up?</label>
-        <input type="number" name="boxes" min="1" required>
-        <label>Age (Optional)</label>
-        <select name="age">
-          <option value="" disabled selected hidden>Select your age</option>
-          <option value="Under 18">Under 18</option>
-          <option value="18-24">18-24</option>
-          <option value="25-34">25-34</option>
-          <option value="35-44">35-44</option>
-          <option value="45-54">45-54</option>
-          <option value="55-64">55-64</option>
-          <option value="65+">65+</option>
-        </select>
-        <label>Sex (Optional)</label>
-        <select name="sex">
-          <option value="" disabled selected hidden>Select your sex</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-        </select>
-        <label>Ethnicity (Optional)</label>
-        <select name="ethnicity">
-          <option value="" disabled selected hidden>Select your ethnicity</option>
-          <option value="White">White</option>
-          <option value="Black or African American">Black or African American</option>
-          <option value="Hispanic or Latino">Hispanic or Latino</option>
-          <option value="Native American or Alaska Native">Native American or Alaska Native</option>
-          <option value="Asian">Asian</option>
-          <option value="Pacific Islander or Native Hawaiian">Pacific Islander or Native Hawaiian</option>
-          <option value="Multiracial">Multiracial</option>
-        </select>
-        <label>Education Level (Optional)</label>
-        <select name="education">
-          <option value="" disabled selected hidden>Select your education</option>
-          <option value="Less than high school">Less than high school</option>
-          <option value="High school diploma or GED">High school diploma or GED</option>
-          <option value="Some college">Some college</option>
-          <option value="Associate's degree">Associate's degree</option>
-          <option value="Bachelor's degree">Bachelor's degree</option>
-          <option value="Graduate or professional degree">Graduate or professional degree</option>
-        </select>
-        <label>Relationship Status (Optional)</label>
-        <select name="relationship">
-          <option value="" disabled selected hidden>Select relationship status</option>
-          <option value="Single">Single</option>
-          <option value="In a relationship">In a relationship</option>
-          <option value="Married">Married</option>
-          <option value="Separated">Separated</option>
-          <option value="Divorced">Divorced</option>
-          <option value="Widowed">Widowed</option>
-        </select>
-        <label>Miscellaneous Comments (Optional)</label>
-        <textarea 
-          name="comments" 
-          rows="4"
-          placeholder="Any extra details...? (Optional)"></textarea>
-        <label>Your Name (Optional)</label>
-        <input type="text" name="name">
-        <button type="submit" class="button">Submit</button>
-      </form>
-      <div class="back-button" onclick="showPage('home-page')">⬅️ Back to Home</div>
-    </div>
+      <div class="form-container" id="pickup-container">
+        <h2>I Picked Up Narcan</h2>
+        <form id="pickup-form">
+          <input type="hidden" name="formType" value="pickup">
+          <label for="boxes">How many boxes were picked up?</label>
+          <input
+            type="number"
+            id="boxes"
+            name="boxes"
+            min="1"
+            required
+          >
+          <label for="age">Age (Optional)</label>
+          <select id="age" name="age">
+            <option value="" disabled selected hidden>Select your age</option>
+            <option value="Under 18">Under 18</option>
+            <option value="18-24">18-24</option>
+            <option value="25-34">25-34</option>
+            <option value="35-44">35-44</option>
+            <option value="45-54">45-54</option>
+            <option value="55-64">55-64</option>
+            <option value="65+">65+</option>
+          </select>
+          <label for="sex"> Sex (Optional)</label>
+          <select id="sex" name="sex">
+            <option value="" disabled selected hidden>Select your sex</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+          <label for="ethnicity">Ethnicity (Optional)</label>
+          <select id="ethnicity" name="ethnicity">
+            <option value="" disabled selected hidden>Select your ethnicity</option>
+            <option value="White">White</option>
+            <option value="Black or African American">Black or African American</option>
+            <option value="Hispanic or Latino">Hispanic or Latino</option>
+            <option value="Native American or Alaska Native">Native American or Alaska Native</option>
+            <option value="Asian">Asian</option>
+            <option value="Pacific Islander or Native Hawaiian">Pacific Islander or Native Hawaiian</option>
+            <option value="Multiracial">Multiracial</option>
+          </select>
+          <label for="education">Education Level (Optional)</label>
+          <select id="education" name="education">
+            <option value="" disabled selected hidden>Select your education</option>
+            <option value="Less than high school">Less than high school</option>
+            <option value="High School diploma or GED">High School diploma or GED</option>
+            <option value="Some College">Some College</option>
+            <option value="Associate's Degree">Associate's Degree</option>
+            <option value="Bachelor's Degree">Bachelor's Degree</option>
+            <option value="Graduate or Professional Degree">Graduate or Professional Degree</option>
+          </select>
+          <label for="relationship">Relationship Status (Optional)</label>
+          <select id="relationship" name="relationship">
+            <option value="" disabled selected hidden>Select relationship status</option>
+            <option value="Single">Single</option>
+            <option value="In a relationship">In a relationship</option>
+            <option value="Married">Married</option>
+            <option value="Separated">Separated</option>
+            <option value="Divorced">Divorced</option>
+            <option value="Widowed">Widowed</option>
+          </select>
+          <label for="comments">Miscellaneous Comments (Optional)</label>
+          <textarea
+            id="comments"
+            name="comments"
+            rows="4"
+            placeholder="Any extra details...?">
+          </textarea>
+          <label for="name">Your Name (Optional)</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+          >
+          <button type="submit" class="button">Submit</button>            
+        </form>
+        <div class="back-button" onclick="showPage('home-page')">
+          ⬅️ Back to Home
+        </div>
+      </div>
+     </div> 
     <div id="report-use-page" class="page">
-      <h2>Report Narcan Use</h2>
-      <form id="report-form">
-        <input type="hidden" name="formType" value="use">
-        <label>How many doses administered? *Two per box*</label>
-        <input type="number" name="doses" min="1" required>
-        <fieldset class="radio-group">
-          <legend>Result:</legend>
-          <label class="radio-label">
-            Overdose Reversal
-            <input type="radio" name="result" value="Overdose Reversal" id="reversal">
-          </label>
-          <label class="radio-label">
-            Overdose Death
-            <input type="radio" name="result" value="Overdose Death" id="death">
-          </label>
-        </fieldset>
-        <label>Was 911 called?</label>
-        <select name="called911" required>
-          <option value="">Select</option>
-          <option value="Yes">Yes</option>
-          <option value="No">No</option>
-        </select>
-        <label>Did they go to the hospital?</label>
-        <select name="hospital" required>
-          <option value="">Select</option>
-          <option value="Yes">Yes</option>
-          <option value="No">No</option>
-          <option value="Unknown">Unknown</option>
-        </select>
-        <label>Miscellaneous Comments (Optional)</label>
-        <textarea 
-          name="comments" 
-          rows="4" 
-          placeholder="Any extra details...? (Optional)"></textarea>
-        <label>Your Name (Optional)</label>
-        <input type="text" name="name" placeholder="e.g. John Doe">
-        <button type="submit" class="button">Submit</button>
-      </form>
-      <div class="back-button" onclick="showPage('home-page')">⬅️ Back to Home</div>
+      <div class="form-container" id="report-container">
+        <h2>Report Narcan Use</h2>
+        <form id="report-form">
+          <input type="hidden" name="formType" value="use">
+          <label for="doses">How many doses administered? *Two per box*</label>
+          <input
+            type="number"
+            id="doses"
+            name="doses"
+            min="1"
+            required
+          >
+          <fieldset class="radio-group">
+            <legend>Result:</legend>
+            <label class="radio-label" for="reversal">
+              <input
+                type="radio"
+                name="result"
+                value="Overdose Reversal"
+                id="reversal"
+                required
+              >
+              Overdose Reversal
+            </label>
+            <label class="radio-label" for="death">
+              <input
+                type="radio"
+                name="result"
+                value="Overdose Death"
+                id="death"
+              >
+              Overdose Death
+            </label>
+          </fieldset>
+          <label for="called911">Was 911 called?</label>
+          <select id="called911" name="called911" required>
+            <option value="" disabled selected hidden>Select</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+          <label for="hospital">Did they go to the hospital?</label>
+          <select id="hospital" name="hospital" required>
+            <option value="" disabled selected hidden>Select</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+            <option value="Unknown">Unknown</option>
+          </select>
+          <label for="comments">Miscellaneous Comments (Optional)</label>
+          <textarea
+            id="comments"
+            name="comments"
+            rows="4"
+            placeholder="Any extra details...?">
+          </textarea>
+          <label for="name">Your Name (Optional)</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+          >
+          <button type="submit" class="button">Submit/button>
+        </form>
+        <div class="back-button" onclick="showPage('home-page')">
+          ⬅️ Back to Home
+        </div>
+      </div>
     </div>
     <div id="contact-page" class="page">
       <h2>Contact ECLC</h2>
