@@ -156,18 +156,6 @@
     ul.resources li a:hover {
       text-decoration: underline;
     }
-.checkbox-label {
-  display: inline-flex;
-  align-items: center;
-  justify-content: flex-start; 
-  margin: 0 24px 12px 0;
-  font-weight: bold;
-  font-size: 16px; 
-}
-
-.checkbox-label input[type="checkbox"] {
-  margin-left: 8px;
-}
 form button.button {
 	display: block;
 	margin: 24px auto;
@@ -243,6 +231,32 @@ textarea{
   width: auto;
   max-width: 240px;
   margin: 8px 0 24px;
+}
+.radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+  border: none;
+  padding: 0;
+}
+.radio-group legend {
+  font-weight: bold;
+  margin-right: 16px;
+  font-size: 1rem;
+  align-self: center;
+}
+.radio-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.radio-label input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  margin: 0;
 }
   </style>
 </head>
@@ -340,25 +354,17 @@ textarea{
         <input type="hidden" name="formType" value="use">
         <label>How many doses administered? *Two per box*</label>
         <input type="number" name="doses" min="1" required>
-        <label>Result:</label><br>
-        <label class="checkbox-label">
-			    Overdose Reversal
-			    <input
-				    type="checkbox"
-            name="result"
-            value="Overdose Reversal"
-				    id="reversal"
-				    onclick="toggleExclusive('reversal')">
-		    </label><br>
-		    <label class="checkbox-label">
-			    Overdose Death
-			    <input
-				    type="checkbox"
-            name="result"
-            value="Overdose Death"
-				    id="death"
-				    onclick="toggleExclusive('death')">
-		    </label><br>
+        <fieldset class="radio-group">
+          <legend>Result:</legend>
+          <label class="radio-label">
+            Overdose Reversal
+            <input type="radio" name="result" value="Overdose Reversal" id="reversal">
+          </label>
+          <label class="radio-label">
+            Overdose Death
+            <input type="radio" name="result" value="Overdose Death" id="death">
+          </label>
+        </fieldset>
         <label>Was 911 called?</label>
         <select name="called911" required>
           <option value="">Select</option>
