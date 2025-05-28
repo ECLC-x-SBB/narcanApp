@@ -194,28 +194,41 @@ textarea{
 #contact-page p a:hover {
   text-decoration: underline;
 }
+#install-btn {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+}
   </style>
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js');
+        navigator.serviceWorker.register('/sw.js')
+        .catch(err => console.error('SW registration failed:', err));
       });
     }
     let deferredPrompt;
+    const installBtn = document.getElementById('install-btn');
+    const isMobile = /Mobi|Android|iPhone|iPad|iPod|/i.test(navigator.userAgent);
     
-    window.addEventListener('beforeinstallprompt', e=> {
+    window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredPrompt = e;
-      const btn = document.getElementById('install-btn');
-      if (btn) btn.style.display = 'block';
+      if (isMobile) {
+        installBtn.style.display = 'block';
+      }
     });
-    document.getElementById('instal-btn').addEventListener('click', async () => {
+    installBtn.addEventListener('click', async () => {
       if (!deferredPrompt) return;
+      installBtn.disabled = true;
       deferredPrompt.prompt();
       const choice = await deferredPrompt.userChoice;
-      console.log('User choice:', choice.outcome);
+      console.log('PWA install choice:', choice.outcome);
       deferredPrompt = null;
-      document.getElementById('install-btn').style.display = 'none';
+      installBtn.style.display = 'none'
     });
     const GAS_URL = 'https://script.google.com/macros/s/AKfycbxRVZcd0nZnjTBvwPTaHIsUck5wKHU8iEfmYaazWHIuqR0p8kLG6BrwqC-VCwNlHwRERg/exec'; 
     function handleImpact(data) {
@@ -337,13 +350,13 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>
   <main>
     <div id="home-page" class="page active">
-      <button id="install-btn" style="display:none;">Connect and Support with the ECLC App!</button>
       <button class="button" onclick="showPage('picked-up-page')">I Picked Up Narcan</button>
       <button class="button" onclick="showPage('report-use-page')">Report Narcan Use</button>
       <button class="link-button" onclick="showPage('contact-page')">Contact ECLC</button>
       <button class="link-button" onclick="showPage('resources-page')">Community Resources</button>
       <button class="link-button" onclick="showPage('impact-page')">Community Impact</button>
       <button class="link-button" onclick="showPage('devotional-page')">Recovery Devotional</button>
+      <button id="install-btn" class="button">Connect and Support with the ECLC App!</button>
     </div>
     <div id="picked-up-page" class="page">
       <h2>I Picked Up Narcan</h2>
