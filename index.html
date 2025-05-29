@@ -178,16 +178,17 @@
       text-decoration: underline;
     }
     .page {
-      opacity: 0;
-      transition: opacity 400ms ease-in-out;
-      position: absolute;
-      width: 100%;
-      left: 0;
-      top: 0;
+      display: none;
     }
     .page.active {
-      opacity: 1;
-      position: relative;
+      display: block;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0}
+      to {opacity: 1}
+    }
+    .fade-in {
+      animation: fadeIn 400ms ease-in-out;
     }
     .back-button {
       margin-top: 20px;
@@ -633,14 +634,17 @@
       `;
     }
     function showPage(pageId) {
-      const currentPage = document.querySelector('.page.active');
-      const nextPage = document.getElementById(pageId);
-      if (currentPage) {
-        currentPage.classList.remove('active');
-        currentPage.style.pointerEvents = 'none';
+      const current = document.querySelector('.page.active');
+      if (current) {
+        current.classList.remove('active');
       }
-      nextPage.classList.add('active');
-      nextPage.style.pointerEvents = 'auto';
+      const next = document.getElementById(pageId);
+      next.classList.add('active', 'fade-in');
+      next.addEventListener(
+        'animationend',
+        () => next.classList.remove('fade-in'),
+        {once: true}
+      );
     }
     function pickupSuccess() {
       const name = document.querySelector('#pickup-form input[name="name"]').value;
