@@ -188,7 +188,7 @@
       to {opacity: 1}
     }
     .fade-in {
-      animation: fadeIn 400ms ease-in-out;
+      animation: fadeIn 1000ms ease-in-out;
     }
     .back-button {
       margin-top: 20px;
@@ -302,6 +302,13 @@
   font-size: 1rem;
   box-sizing: border-box;
 }
+.form-container textarea::placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+.form-container textarea {
+  line-height: 1.4;
+  vertical-align: top;
+}
 #pickup-form input[type="number"],
 #report-form input[type="number"] {
   max-width: 100px;
@@ -339,6 +346,11 @@
   width: 18px;
   height: 18px;
   margin: 0;
+}
+fieldset.radio-group {
+  border: none;
+  margin: 0;
+  padding: 0;
 }
 .form-container h2 {
   font-size: 1.75rem;
@@ -505,19 +517,67 @@
               Overdose Death
             </label>
           </fieldset>
-          <label for="called911">Was 911 called?</label>
-          <select id="called911" name="called911" required>
-            <option value="" disabled selected hidden>Select</option>
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
-          </select>
-          <label for="hospital">Did they go to the hospital?</label>
-          <select id="hospital" name="hospital" required>
-            <option value="" disabled selected hidden>Select</option>
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
-            <option value="Unknown">Unknown</option>
-          </select>
+          <fieldset class="radio-group">
+            <legend>Was 911 called?</legend>
+            <label class="radio-label">
+              <input 
+                type="radio"
+                name="called911"
+                value="Yes"
+                required
+              >
+              Yes
+            </label>
+            <label class="radio-label">
+              <input
+                type="radio"
+                name="called911"
+                value="No"
+              >
+              No
+            </label>
+          </fieldset>
+          <!-- <label for="called911">Was 911 called?</label> -->
+          <!-- <select id="called911" name="called911" required> -->
+            <!-- <option value="" disabled selected hidden>Select</option> -->
+            <!-- <option value="Yes">Yes</option> -->
+            <!-- <option value="No">No</option> -->
+          <!-- </select> -->
+           <fieldset class="radio-group">
+            <legend>Was the individual hospitalized?</legend>
+            <label class="radio-label">
+              <input
+                type="radio"
+                name="hospital"
+                value="Yes"
+                required
+              >
+              Yes
+            </label>
+            <label class="radio-label" for="hospital">
+              <input
+                type="radio"
+                name="hospital"
+                value="No"
+              >
+              No
+            </label>
+            <label class="radio-label" for="hospital">
+              <input
+                type="radio"
+                name="hospital"
+                value="Unknown"
+              >
+              Unknown
+            </label>
+           </fieldset>
+          <!-- <label for="hospital">Did they go to the hospital?</label> -->
+          <!-- <select id="hospital" name="hospital" required> -->
+            <!-- <option value="" disabled selected hidden>Select</option> -->
+            <!-- <option value="Yes">Yes</option> -->
+            <!-- <option value="No">No</option> -->
+            <!-- <option value="Unknown">Unknown</option> -->
+          <!-- </select> -->
           <label for="comments">Miscellaneous Comments (Optional)</label>
           <textarea
             id="comments"
