@@ -269,6 +269,9 @@
     display: none !important;
   }
 }
+@keyframes fadeInUp {
+  to { opacity: 1; transform: translateY(0); }
+}
 .form-container {
   box-sizing: border-box;
   max-width: 480px;
@@ -283,14 +286,6 @@
   transform: translateY(20px);
   animation: fadeInUp 0.5s ease-out forwards;
 }
-@keyframes fadeInUp {
-  to {opacity: 1; transform: translateY(0); }
-}
-.form-container label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-}
 .form-container input,
 .form-container select,
 .form-container textarea {
@@ -304,10 +299,35 @@
 }
 .form-container textarea::placeholder {
   color: rgba(0, 0, 0, 0.5);
+  opacity: 1;
 }
-.form-container textarea {
-  line-height: 1.4;
-  vertical-align: top;
+.form-container label,
+.form-container legend {
+  font-weight: 700;
+  font-size: 1.125rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+.form-container fieldset.radio-group{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  border: none;
+  margin: 1.5rem auto;
+  padding: 1rem;
+  background: rgba(255,255,255,0.8);
+  border-radius: 8px;
+  max-width: 400px;
+}
+.form-container fieldset.radio-group legend {
+  flex: 1 0 100%;
+}
+.form-container fieldset.radio-group .radio-label {
+  flex: 1 0 45%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 #pickup-form input[type="number"],
 #report-form input[type="number"] {
@@ -322,47 +342,14 @@
   max-width: none;
   margin: 0;
 }
-.radio-group {
-  display: flex;
-  flex-wrap: wrap;
-}
-.radio-group > legend {
-  flex: 1 0 100%;
-  text-align: center;
-  margin-bottom: 1rem;
-}
-.radio-group > .radio-label {
-  flex: 1 0 50%;
-  display: flex;
-  align-items: center;
-}
-.radio-group > .radio-label:first-of-type {
-  justify-content: flex-start;
-}
-.radio-group > .radio-label:last-of-type {
-  justify-content: flex-end;
-}
-.radio-label input[type="radio"] {
+.form-container fieldset.radio-group .radio-label input[type="radio"] {
   width: 18px;
   height: 18px;
   margin: 0;
 }
-fieldset.radio-group {
-  border: none;
-  margin: 0;
-  padding: 0;
-}
 .form-container h2 {
   font-size: 1.75rem;
   margin-bottom: 1rem;
-  text-align: center;
-}
-.form-container label,
-.form-container legend {
-  font-weight: 700;
-  font-size: 1.125rem;
-  margin-bottom: 0.5rem;
-  display: block;
   text-align: center;
 }
 .ios-install-tip {
