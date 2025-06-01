@@ -318,7 +318,7 @@
   margin-bottom: 0.5rem;
   display: block;
 }
-.form-container fieldset.radio-group{
+/* .form-container fieldset.radio-group{
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -334,7 +334,7 @@
   margin-bottom: 0.75rem;
   background: none;
   padding: 0;
-}
+} */
 #pickup-form input[type="number"], 
 #report-form input[type="number"] {
   max-width: 100px;
@@ -348,11 +348,11 @@
   max-width: none;
   margin: 0;
 }
-.form-container fieldset.radio-group .radio-label input[type="radio"] {
+/* .form-container fieldset.radio-group .radio-label input[type="radio"] {
   width: 18px;
   height: 18px;
   margin: 0;
-}
+} */
 .form-container h2 {
   font-size: 1.75rem;
   margin-bottom: 1rem;
@@ -488,89 +488,25 @@
             min="1"
             required
           >
-          <fieldset class="radio-group">
-            <legend>Result:</legend>
-            <label class="radio-label" for="reversal">
-              <input
-                type="radio"
-                name="result"
-                value="Overdose Reversal"
-                id="reversal"
-                required
-              >
-              Overdose Reversal
-            </label>
-            <label class="radio-label" for="death">
-              <input
-                type="radio"
-                name="result"
-                value="Overdose Death"
-                id="death"
-              >
-              Overdose Death
-            </label>
-          </fieldset>
-          <fieldset class="radio-group">
-            <legend>Was 911 called?</legend>
-            <label class="radio-label">
-              <input 
-                type="radio"
-                name="called911"
-                value="Yes"
-                required
-              >
-              Yes
-            </label>
-            <label class="radio-label">
-              <input
-                type="radio"
-                name="called911"
-                value="No"
-              >
-              No
-            </label>
-          </fieldset>
-          <!-- <label for="called911">Was 911 called?</label> -->
-          <!-- <select id="called911" name="called911" required> -->
-            <!-- <option value="" disabled selected hidden>Select</option> -->
-            <!-- <option value="Yes">Yes</option> -->
-            <!-- <option value="No">No</option> -->
-          <!-- </select> -->
-           <fieldset class="radio-group">
-            <legend>Was the individual hospitalized?</legend>
-            <label class="radio-label">
-              <input
-                type="radio"
-                name="hospital"
-                value="Yes"
-                required
-              >
-              Yes
-            </label>
-            <label class="radio-label" for="hospital">
-              <input
-                type="radio"
-                name="hospital"
-                value="No"
-              >
-              No
-            </label>
-            <label class="radio-label" for="hospital">
-              <input
-                type="radio"
-                name="hospital"
-                value="Unknown"
-              >
-              Unknown
-            </label>
-           </fieldset>
-          <!-- <label for="hospital">Did they go to the hospital?</label> -->
-          <!-- <select id="hospital" name="hospital" required> -->
-            <!-- <option value="" disabled selected hidden>Select</option> -->
-            <!-- <option value="Yes">Yes</option> -->
-            <!-- <option value="No">No</option> -->
-            <!-- <option value="Unknown">Unknown</option> -->
-          <!-- </select> -->
+          <label for="result">Result?</label>
+          <select id="result" name="result" required>
+            <option value="" disabled selected hidden>Select</option>
+            <option value="Overdose Reversal">Overdose Reversal</option>
+            <option value="Overdose Death">Overdose Death</option>
+          </select>        
+          <label for="called911">Was 911 called?</label>
+          <select id="called911" name="called911" required> 
+            <option value="" disabled selected hidden>Select</option> 
+            <option value="Yes">Yes</option> 
+            <option value="No">No</option> 
+          </select>      
+          <label for="hospital">Did they go to the hospital?</label> 
+          <select id="hospital" name="hospital" required> 
+            <option value="" disabled selected hidden>Select</option> 
+            <option value="Yes">Yes</option> 
+            <option value="No">No</option> 
+            <option value="Unknown">Unknown</option> 
+          </select> 
           <label for="comments">Miscellaneous Comments (Optional)</label>
           <textarea
             id="comments"
