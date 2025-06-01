@@ -56,6 +56,7 @@
           var(--teal)
       );
       background-repeat: no-repeat;
+      background-size: 100vw 100vh
       font-family: 'Inter Variable', sans-serif;
       font-optical-sizing: auto;
     }
@@ -296,10 +297,18 @@
   border-radius: 8px;
   font-size: 1rem;
   box-sizing: border-box;
+  background: #fff;
 }
-.form-container textarea::placeholder {
-  color: rgba(0, 0, 0, 0.5);
-  opacity: 1;
+#pickup-container textarea::placeholder,
+#report-container textarea::placeholder {
+  color: rgba(0,0,0,0.5) !important;
+  opacity: 1 !important;
+}
+#pickup-container textarea,
+#report-container textarea {
+  padding: 1rem;
+  line-height: 1.4;
+  vertical-align: top;
 }
 .form-container label,
 .form-container legend {
@@ -312,6 +321,7 @@
 .form-container fieldset.radio-group{
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 1rem;
   border: none;
   margin: 1.5rem auto;
@@ -321,7 +331,9 @@
   max-width: 400px;
 }
 .form-container fieldset.radio-group legend {
-  flex: 1 0 100%;
+  margin-bottom: 0.75rem;
+  background: none;
+  padding: 0;
 }
 
 #pickup-form input[type="number"], 
