@@ -299,11 +299,28 @@
   box-sizing: border-box;
   background: #fff;
 }
-#pickup-container textarea::placeholder,
+.form-container select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23002B56" viewBox="0 0 16 16"><path d="M1 517 7 7-7H1z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 0.75rem 0.75rem;
+}
+.form-container select:hover {
+  border-color: var(--teal);
+}
+.form-container select:focus {
+  outline:none;
+  box-shadow: 0 0 0 2px var(--mint-green);
+}
+/* #pickup-container textarea::placeholder,
 #report-container textarea::placeholder {
   color: rgba(0,0,0,0.5) !important;
   opacity: 1 !important;
-}
+} */
 #pickup-container textarea,
 #report-container textarea {
   padding: 1rem;
@@ -312,8 +329,9 @@
 }
 .form-container label,
 .form-container legend {
+  font-family: 'Inter Display', sans-serif;
   font-weight: 700;
-  font-size: 1.125rem;
+  font-size: 1.25rem;
   text-align: center;
   margin-bottom: 0.5rem;
   display: block;
@@ -354,9 +372,15 @@
   margin: 0;
 } */
 .form-container h2 {
+  font-family: 'Inter Display', sans-serif;
+  font-weight: 700;
   font-size: 1.75rem;
   margin-bottom: 1rem;
   text-align: center;
+}
+.form-container textarea:focus {
+  outline:none;
+  box-shadow: 0 0 0 2px var(--mint-green);
 }
 .ios-install-tip {
   position: fixed;
@@ -455,12 +479,12 @@
             <option value="Divorced">Divorced</option>
             <option value="Widowed">Widowed</option>
           </select>
-          <label for="comments">Miscellaneous Comments (Optional)</label>
+          <label for="comments">Any other information? (Optional)</label>
           <textarea
             id="comments"
             name="comments"
             rows="4"
-            placeholder="Any extra details...?">
+          >
           </textarea>
           <label for="name">Your Name (Optional)</label>
           <input
@@ -490,29 +514,29 @@
           >
           <label for="result">Result?</label>
           <select id="result" name="result" required>
-            <option value="" disabled selected hidden>Select</option>
+            <option value="" disabled selected hidden>What was the result?</option>
             <option value="Overdose Reversal">Overdose Reversal</option>
             <option value="Overdose Death">Overdose Death</option>
           </select>        
           <label for="called911">Was 911 called?</label>
           <select id="called911" name="called911" required> 
-            <option value="" disabled selected hidden>Select</option> 
+            <option value="" disabled selected hidden>Were Emergency Services dispatched?</option> 
             <option value="Yes">Yes</option> 
             <option value="No">No</option> 
           </select>      
           <label for="hospital">Did they go to the hospital?</label> 
           <select id="hospital" name="hospital" required> 
-            <option value="" disabled selected hidden>Select</option> 
+            <option value="" disabled selected hidden>Was the victim hospitalized?</option> 
             <option value="Yes">Yes</option> 
             <option value="No">No</option> 
             <option value="Unknown">Unknown</option> 
           </select> 
-          <label for="comments">Miscellaneous Comments (Optional)</label>
+          <label for="comments">Any other information? (Optional)</label>
           <textarea
             id="comments"
             name="comments"
             rows="4"
-            placeholder="Any extra details...?">
+          >
           </textarea>
           <label for="name">Your Name (Optional)</label>
           <input
