@@ -581,7 +581,7 @@
           type="tel"
           id="vol-phone"
           name="phone"
-          pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+          maxlength="14"
           required
         >
         <label for="vol-contactPref">How would you like us to contact you? (Required)</label>
@@ -764,6 +764,25 @@ document.addEventListener('DOMContentLoaded', () => {
   wire('report-form', reportSuccess);
   wire('volunteer-form', volunteerSuccess);
   updateImpact();  
+});
+const phoneInput = document.getElementById('vol-phone');
+phoneInput.addEventListener('input', () => {
+  let digits = phoneInput.value.replace(/\D/g, '');
+  if (digits.length > 10) digits = digits.slice(0, 10);
+  
+  const part1 = digits.substring(0, 3);
+  const part2 = digits.substring(3, 6);
+  const part3 = digits.substring(6,10);
+
+  if (digits.length <= 3) {
+    phoneInput.value = part1 ? `(${part1}` : '';
+  }
+  else if (digits.length <= 6) {
+    phoneInput.value = `(${part1})${part2}`;
+  }
+  else {
+    phoneInput.value = `(${part1})${part2}-${part3}`;
+  }
 });
 let devosData = null;
 let currentDate = new Date();
