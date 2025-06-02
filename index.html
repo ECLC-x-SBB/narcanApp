@@ -521,7 +521,7 @@
           </select>        
           <label for="called911">Was 911 called?</label>
           <select id="called911" name="called911" required> 
-            <option value="" disabled selected hidden>Select?</option> 
+            <option value="" disabled selected hidden>Select</option> 
             <option value="Yes">Yes</option> 
             <option value="No">No</option> 
           </select>      
@@ -562,29 +562,36 @@
           Please fill out each of the fields below and don't forget to Submit!
           Someone from our team will be in touch when we have a volunteer opportunity for you!
         </p>
-        <label for="vol-name">Your Full Name *</label>
+        <label for="vol-name">Your Full Name (Required)</label>
         <input
           type="text"
           id="vol-name"
           name="name"
           required
         >
-        <label for="vol-email">Your Email Address *</label>
+        <label for="vol-email">Your Email Address (Required)</label>
         <input
           type="email"
           id="vol-email"
           name="email"
           required
         >
-        <label for="vol-phone">Phone Number *</label>
+        <label for="vol-phone">Phone Number (Required)</label>
         <input
           type="tel"
           id="vol-phone"
           name="phone"
-          pattern="^[0-9\-\+\s\(\)]{7,20}$"
+          pattern="([0-9]{3})[0-9]{3}-[0-9]{4}"
           required
         >
-        <label for="vol-experience">Do you have any experience with Recovery or Volunteering? *</label>
+        <label for="vol-contactPref">How would you like us to contact you? (Required)</label>
+        <select id="vol-contactPref" name="contactPref" required>
+          <option value="" disabled selected hidden>Select your contact preference</option>
+          <option value="email">Email</option>
+          <option value="message">Text Message</option>
+          <option value="call">Phone Call</option>
+        </select>
+        <label for="vol-experience">Do you have any experience with Recovery or Volunteering? (Required)</label>
         <textarea
           id="vol-experience"
           name="experience"
