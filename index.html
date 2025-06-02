@@ -412,6 +412,7 @@
     <div id="home-page" class="page active">
       <button class="button" onclick="showPage('picked-up-page')">I Picked Up Narcan</button>
       <button class="button" onclick="showPage('report-use-page')">Report Narcan Use</button>
+      <button class="link-button" onClick="showPage('volunteer-page')">Volunteer with ECLC!</button>
       <button class="link-button" onclick="showPage('contact-page')">Contact ECLC</button>
       <button class="link-button" onclick="showPage('resources-page')">Community Resources</button>
       <button class="link-button" onclick="showPage('impact-page')">Community Impact</button>
@@ -514,24 +515,24 @@
           >
           <label for="result">Result?</label>
           <select id="result" name="result" required>
-            <option value="" disabled selected hidden>What was the result?</option>
+            <option value="" disabled selected hidden>Select</option>
             <option value="Overdose Reversal">Overdose Reversal</option>
             <option value="Overdose Death">Overdose Death</option>
           </select>        
           <label for="called911">Was 911 called?</label>
           <select id="called911" name="called911" required> 
-            <option value="" disabled selected hidden>Were Emergency Services dispatched?</option> 
+            <option value="" disabled selected hidden>Select?</option> 
             <option value="Yes">Yes</option> 
             <option value="No">No</option> 
           </select>      
           <label for="hospital">Did they go to the hospital?</label> 
           <select id="hospital" name="hospital" required> 
-            <option value="" disabled selected hidden>Was the victim hospitalized?</option> 
+            <option value="" disabled selected hidden>Select</option> 
             <option value="Yes">Yes</option> 
             <option value="No">No</option> 
             <option value="Unknown">Unknown</option> 
           </select> 
-          <label for="comments">Any other information? (Optional)</label>
+          <label for="comments">Any additional information? (Optional)</label>
           <textarea
             id="comments"
             name="comments"
@@ -547,6 +548,52 @@
           <button type="submit" class="button">Submit</button>
         </form>
         <div class="back-button" onclick="showPage('home-page')">
+          ⬅️ Back to Home
+        </div>
+      </div>
+    </div>
+    <div id="volunteer-page" class="page">
+      <div class="form-container" id="volunteer-container">
+        <h2>Volunteer with ECLC today!</h2>
+        <form id="volunteer-form">
+          <input type="hidden" name="formType" value="volunteer">
+        <p style="margin-bottom: 1.5rem; font-size: 1rem; line-height: 1.5;">
+          Thank you for considering volunteering with ECLC!
+          Please fill out each of the fields below and don't forget to Submit!
+          Someone from our team will be in touch when we have a volunteer opportunity for you!
+        </p>
+        <label for="vol-name">Your Full Name *</label>
+        <input
+          type="text"
+          id="vol-name"
+          name="name"
+          required
+        >
+        <label for="vol-email">Your Email Address *</label>
+        <input
+          type="email"
+          id="vol-email"
+          name="email"
+          required
+        >
+        <label for="vol-phone">Phone Number *</label>
+        <input
+          type="tel"
+          id="vol-phone"
+          name="phone"
+          pattern="^[0-9\-\+\s\(\)]{7,20}$"
+          required
+        >
+        <label for="vol-experience">Do you have any experience with Recovery or Volunteering? *</label>
+        <textarea
+          id="vol-experience"
+          name="experience"
+          rows="4"
+          required
+         ></textarea> 
+         <button type="submit" class="button">Submit</button>
+        </form>
+        <div class="back-button" onclick="showpage('home-page')">
           ⬅️ Back to Home
         </div>
       </div>
@@ -673,6 +720,13 @@
       document.getElementById('report-form').reset();
       showPage('home-page');
     }
+    function volunteerSuccess() {
+      const name = document.querySelector('#volunteer-form input[name="name"]').value
+      alert(name ? `Thank you, ${name}, for reaching out to volunteer!` :
+                   'Thank you for reaching out to volunteer!');
+      document.getElementById('volunteer-form').reset();
+      showPage('home-page');
+    }
     function toggleExclusive(id) {
       ['reversal','death'].forEach(i => { if (i !== id) document.getElementById(i).checked = false; });
     }
@@ -701,6 +755,7 @@ function wire(formId, onSuccess) {
 document.addEventListener('DOMContentLoaded', () => {
   wire('pickup-form', pickupSuccess);
   wire('report-form', reportSuccess);
+  wire('volunteer-form', volunteerSuccess);
   updateImpact();  
 });
 let devosData = null;
