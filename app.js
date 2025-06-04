@@ -21,7 +21,6 @@
       installBtn.disabled = true;
       deferredPrompt.prompt();
       const choice = await deferredPrompt.userChoice;
-      console.log('PWA install choice:', choice.outcome);
       deferredPrompt = null;
       installBtn.style.display = 'none'
     });
@@ -203,10 +202,8 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 });
 document.querySelectorAll('.button').forEach(btn => {
-  console.log('attaching ripple listener to', btn);
-  
+
   btn.addEventListener('click', function(e) {
-    console.log('ripple click on', this);
     
     const ripple = document.createElement('span');
     ripple.classList.add('ripple');
