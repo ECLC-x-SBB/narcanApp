@@ -24,7 +24,78 @@
       deferredPrompt = null;
       installBtn.style.display = 'none'
     });
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbxRVZcd0nZnjTBvwPTaHIsUck5wKHU8iEfmYaazWHIuqR0p8kLG6BrwqC-VCwNlHwRERg/exec'; 
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbxRVZcd0nZnjTBvwPTaHIsUck5wKHU8iEfmYaazWHIuqR0p8kLG6BrwqC-VCwNlHwRERg/exec';
+async function sha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+function setUser(email,name){
+  if(email){
+    localStorage.setItem('userEmail', email);
+    localStorage.setItem('userName', name||'');
+    document.getElementById('login-btn').style.display='none';
+    document.getElementById('logout-btn').style.display='inline-block';
+  } else {
+    localStorage.removeItem('userEmail');
+    localStorage.removeItem('userName');
+    document.getElementById('login-btn').style.display='inline-block';
+    document.getElementById('logout-btn').style.display='none';
+  }
+  autoFillForms();
+}
+function logout(){
+  setUser(null);
+}
+function autoFillForms(){
+  const email = localStorage.getItem('userEmail') || '';
+  const name = localStorage.getItem('userName') || '';
+  document.getElementById('pickup-email').value = email;
+  document.getElementById('report-email').value = email;
+  document.getElementById('volunteer-email').value = email;
+  document.querySelector('#pickup-form input[name="name"]').value = name;
+  document.querySelector('#report-form input[name="name"]').value = name;
+}
+function handleLogin(res){
+  if(res.status==='ok'){
+    alert('Login successful');
+    setUser(res.email,res.name);
+    showPage('home-page');
+  }else{
+    alert('Invalid login');
+  }
+}
+function loginSubmit(e){
+  e.preventDefault();
+  const email = document.getElementById('login-email').value;
+  const pass = document.getElementById('login-password').value;
+  sha256(pass).then(hash=>{
+    const s=document.createElement('script');
+    s.src=`${GAS_URL}?action=login&email=${encodeURIComponent(email)}&password=${hash}&callback=handleLogin`;
+    document.body.appendChild(s);
+  });
+}
+function signupSubmit(e){
+  e.preventDefault();
+  const form=new FormData(document.getElementById('signup-form'));
+  fetch(GAS_URL,{method:'POST',mode:'no-cors',body:form})
+    .then(()=>{alert('Signup submitted');showPage('login-page');})
+    .catch(()=>alert('Signup error'));
+}
+function updateMyImpact(){
+  const email = localStorage.getItem('userEmail');
+  if(!email){ document.getElementById('my-impact-stats').textContent='Please log in.'; return; }
+  const range=document.getElementById('my-impact-range').value;
+  const s=document.createElement('script');
+  s.src=`${GAS_URL}?action=impactUser&email=${encodeURIComponent(email)}&range=${range}&callback=handleMyImpact`;
+  document.body.appendChild(s);
+}
+function handleMyImpact(data){
+  document.getElementById('my-impact-stats').innerHTML = `
+    <p>Boxes Picked Up: ${data.pickedUp}</p>
+    <p>Doses Used: ${data.dosesUsed}</p>
+    <p>Lives Saved: ${data.livesSaved}</p>
+    <p>Hospitalizations: ${data.hospitalizations}</p>`;
+}
     function handleImpact(data) {
       document.getElementById('impact-stats').innerHTML = `
         <p>Total Boxes Picked Up: ${data.pickedUp}</p>
@@ -45,6 +116,7 @@
         () => next.classList.remove('fade-in'),
         {once: true}
       );
+      if(pageId==='my-impact-page') updateMyImpact();
     }
     function pickupSuccess() {
       const name = document.querySelector('#pickup-form input[name="name"]').value;
@@ -97,11 +169,18 @@ document.addEventListener('DOMContentLoaded', () => {
   wire('pickup-form', pickupSuccess);
   wire('report-form', reportSuccess);
   wire('volunteer-form', volunteerSuccess);
+  const loginForm = document.getElementById('login-form');
+  if (loginForm) loginForm.addEventListener('submit', loginSubmit);
+  const signupForm = document.getElementById('signup-form');
+  if (signupForm) signupForm.addEventListener('submit', signupSubmit);
   const savedRange = localStorage.getItem('impactRange');
   if (savedRange) {
     document.getElementById('impact-range').value = savedRange;
   }
   updateImpact();
+  const email = localStorage.getItem('userEmail');
+  setUser(email,email?localStorage.getItem('userName'):null);
+  if(email) updateMyImpact();
 });
 const phoneInput = document.getElementById('vol-phone');
 phoneInput.addEventListener('input', () => {
