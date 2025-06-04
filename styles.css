@@ -1,0 +1,381 @@
+    @font-face {
+      font-family: 'Inter Variable';
+      src: url('/assets/fonts/InterVariable.woff2') format('woff2'), url('/assets/fonts/InterVariable.ttf') format('truetype');
+      font-weight: 100 900;
+      font-stretch: 100%;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Inter Text';
+      font-weight: 400 700;
+      font-style: normal;
+      font-display: swap;
+      src:
+        url('/assets/fonts/Inter-Regular.woff2') format('woff2'),
+        url('/assets/fonts/Inter-Medium.woff2') format('woff2'),
+        url('/assets/fonts/Inter-SemiBold.woff2') format('woff2'),
+        url('/assets/fonts/Inter-Bold.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter Display';
+      font-weight: 400 700;
+      font-style: normal;
+      font-display: swap;
+      src: 
+        url('/assets/fonts/InterDisplay-Regular.woff2') format('woff2'),
+        url('/assets/fonts/InterDisplay-Medium.woff2') format('woff2'),
+        url('/assets/fonts/InterDisplay-SemiBold.woff2') format('woff2'),
+        url('/assets/fonts/InterDisplay-Bold.woff2') format('woff2');
+    }
+    :root {
+      --light-aqua: #E7FCFB;
+      --mint-green: #2FDBB8;
+      --teal: #15B2AE;
+      --text-dark: #002B56;
+    }
+    html {
+      background: linear-gradient(
+        to bottom right,
+          var(--light-aqua),
+          var(--mint-green),
+          var(--teal)
+      );
+      background-repeat: no-repeat;
+      background-size: auto;
+      font-family: 'Inter Variable', sans-serif;
+      font-optical-sizing: auto;
+    }
+    body {
+      margin: 0;
+      background: none;
+      color: var(--text-dark);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    input,
+    select,
+    textarea {
+      font-family: 'Inter Text', sans-serif;
+      font-weight: 400;
+    }
+    label,
+    legend {
+      font-family: 'Inter Text', sans-serif;
+      font-weight: 500;
+    }
+    .button,
+    button {
+      font-family: 'Inter Text', sans-serif;
+      font-weight: 600;
+    }
+    h1, .h1,
+    h2, .h2 {
+      font-family: 'Inter Display', sans-serif;
+      font-weight: 700;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      padding: 16px;
+      flex-shrink: 0;
+      background: transparent;
+    }
+    .header-left {
+      flex: 1;
+      text-align: right;
+      font-size: 16px;
+      font-weight: bold;
+      padding-right: 10px;
+    }
+    .header-right {
+      flex: 1;
+      text-align: left;
+      font-size: 16px;
+      font-weight: bold;
+      padding-left: 10px;
+    }
+    .logo {
+      width: 120px;
+      height: auto;
+    }
+    main {
+      flex: 1;
+      text-align: center;
+      padding: 20px;
+    }
+    .button {
+      background-color: var(--mint-green);
+      color: white;
+      padding: 14px 28px;
+      margin: 12px 12px 32px;
+      border: none;
+      border-radius: 10px;
+      font-size: 20px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: background-color 0.3s;
+      max-width: 300px;
+      width: 100%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .button:hover {
+      background-color: var(--teal);
+    }
+    .button:focus {
+      outline: 3px solid var(--text-dark);
+      outline-offset: 2px;
+    }
+    .button:active {
+      transform: scale(0.97);
+    }
+    .button .ripple {
+      position: absolute;
+      border-radius: 50%;
+      transform: scale(0);
+      pointer-events: none;
+      background-color: rgba(0, 0, 0, 0.2);
+      z-index: 1;
+      animation: ripple 1000ms ease-out;
+    }
+    @keyframes ripple {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+    .link-button {
+      display: block;
+      width: fit-content;
+      margin: 16px auto;
+      background: none;
+      border: none;
+      padding: 0;
+      color: var(--text-dark);
+      font-size: 18px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .link-button:hover {
+      text-decoration: underline;
+    }
+    .page {
+      display: none;
+    }
+    .page.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0}
+      to {opacity: 1}
+    }
+    .fade-in {
+      animation: fadeIn 1000ms ease-in-out;
+    }
+    .back-button {
+      margin-top: 20px;
+      font-size: 16px;
+      color: var(--text-dark);
+      cursor: pointer;
+    }
+    footer {
+      flex-shrink: 0;
+      padding: 12px;
+      text-align: center;
+      font-size: 16px;
+      background: transparent;
+    }
+    #impact-range {
+      margin-bottom: 16px;
+      font-size: 16px;
+    }
+    ul.resources {
+      list-style: none;
+      padding: 0;
+      text-align: left;
+      max-width: 360px;
+      margin: auto;
+    }
+    ul.resources li a {
+      display: block;
+      font-size: 16px;
+      margin: 8px 0;
+      color: var(--text-dark);
+      text-decoration: none;
+    }
+    ul.resources li a:hover {
+      text-decoration: underline;
+    }
+#devotional-verse {
+  font-weight: bold;
+  font-style: italic;
+  margin-bottom: 1em;
+}
+#devotional-text p:last-child {
+  font-weight: bold;
+  margin-top: 1em;
+}
+#dev-date {
+  font-weight: bold;
+  font-size: 1.25rem;
+  margin: 0.5em 0;
+}
+.map-container {
+  max-width: 360px;
+  margin: 0 auto 16px;
+}
+#contact-page p a {
+  color: var(--text-dark);
+  text-decoration: none;
+  font-weight: bold;
+}
+#contact-page p a:hover {
+  text-decoration: underline;
+}
+#install-btn {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+}
+@media (max-width: 360px) {
+  .button {
+    padding: 12px 24px;
+    font-size: 18px;
+  }
+}
+@media (min-width: 768px) {
+  #install-btn {
+    display: none !important;
+  }
+}
+@keyframes fadeInUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+.form-container {
+  box-sizing: border-box;
+  max-width: 480px;
+  width: 90%;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+.form-container input,
+.form-container select,
+.form-container textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  background: #fff;
+}
+.form-container select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23002B56" viewBox="0 0 16 16"><path d="M1 517 7 7-7H1z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 0.75rem 0.75rem;
+}
+.form-container select:hover {
+  border-color: var(--teal);
+}
+.form-container select:focus {
+  outline:none;
+  box-shadow: 0 0 0 2px var(--mint-green);
+}
+/* #pickup-container textarea::placeholder,
+#report-container textarea::placeholder {
+  color: rgba(0,0,0,0.5) !important;
+  opacity: 1 !important;
+} */
+#pickup-container textarea,
+#report-container textarea {
+  padding: 1rem;
+  line-height: 1.4;
+  vertical-align: top;
+}
+.form-container label,
+.form-container legend {
+  font-family: 'Inter Display', sans-serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+/* .form-container fieldset.radio-group{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  border: none;
+  margin: 1.5rem auto;
+  padding: 1rem;
+  background: none;
+  border-radius: 8px;
+  max-width: 400px;
+}
+.form-container fieldset.radio-group legend {
+  margin-bottom: 0.75rem;
+  background: none;
+  padding: 0;
+} */
+#pickup-form input[type="number"], 
+#report-form input[type="number"] {
+  max-width: 100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.form-container .button {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.125rem;
+  max-width: none;
+  margin: 0;
+}
+/* .form-container fieldset.radio-group .radio-label input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+} */
+.form-container h2 {
+  font-family: 'Inter Display', sans-serif;
+  font-weight: 700;
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.form-container textarea:focus {
+  outline:none;
+  box-shadow: 0 0 0 2px var(--mint-green);
+}
+.ios-install-tip {
+  position: fixed;
+  bottom: 16px; left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  z-index: 1001;
+}
