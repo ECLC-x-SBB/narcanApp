@@ -28,14 +28,16 @@
   </div>
   <main>
     <div id="home-page" class="page active">
-      <button class="button" onclick="showPage('picked-up-page')">I Picked Up Narcan</button>
-      <button class="button" onclick="showPage('report-use-page')">Report Narcan Use</button>
-      <button class="link-button" onClick="showPage('volunteer-page')">Volunteer with ECLC!</button>
-      <button class="link-button" onclick="showPage('contact-page')">Contact ECLC</button>
-      <button class="link-button" onclick="showPage('resources-page')">Community Resources</button>
-      <button class="link-button" onclick="showPage('impact-page')">Community Impact</button>
-      <button class="link-button" onclick="showPage('devotional-page')">Recovery Devotional</button>
-      <button class="button" id="install-btn" style="display:none">Connect and Support with the ECLC App!</button>
+      <div class="home-buttons">
+        <button class="button" onclick="showPage('picked-up-page')">I Picked Up Narcan</button>
+        <button class="button" onclick="showPage('report-use-page')">Report Narcan Use</button>
+        <button class="link-button" onClick="showPage('volunteer-page')">Volunteer with ECLC!</button>
+        <button class="link-button" onclick="showPage('contact-page')">Contact ECLC</button>
+        <button class="link-button" onclick="showPage('resources-page')">Community Resources</button>
+        <button class="link-button" onclick="showPage('impact-page')">Community Impact</button>
+        <button class="link-button" onclick="showPage('devotional-page')">Recovery Devotional</button>
+        <button class="button" id="install-btn" style="display:none">Connect and Support with the ECLC App!</button>
+      </div>
     </div>
     <div id="picked-up-page" class="page">
       <div class="form-container" id="pickup-container">
@@ -224,6 +226,7 @@
       </div>
     </div>
     <div id="contact-page" class="page">
+      <div class="form-container">
       <h2>Contact ECLC</h2>
       <div class="map-container">
         <iframe
@@ -246,8 +249,10 @@
       <p><a href="tel:+18506125640" class="link-button">Call Us</a></p>
       <p><a href="mailto:emeraldcoastlifecenter@gmail.com" class="link-button">Email Us</a></p>
       <div class="back-button" onclick="showPage('home-page')">⬅️ Back to Home</div>
+      </div>
     </div>
     <div id="resources-page" class="page">
+      <div class="form-container">
       <h2>Community Resources</h2>
       <ul class="resources">
         <li><a href="https://emeraldcoastlifecenter.org" target="_blank">Lighthouse @ Emerald Coast Life Center</a></li>
@@ -256,8 +261,10 @@
         <li><a href="https://988lifeline.org" target="_blank">24/7 Crisis Hotline</a></li>
       </ul>
       <div class="back-button" onclick="showPage('home-page')">⬅️ Back to Home</div>
+      </div>
     </div>
     <div id="impact-page" class="page">
+      <div class="form-container">
       <h2>Community Impact</h2>
       <label for="impact-range">Select Range:</label><br>
       <select id="impact-range" onchange="updateImpact()">
@@ -267,8 +274,10 @@
       </select>
       <div id="impact-stats"></div>
       <div class="back-button" onclick="showPage('home-page')">⬅️ Back to Home</div>
+      </div>
     </div>
     <div id="devotional-page" class="page">
+      <div class="form-container">
       <h2>Recovery Devotional</h2>
       <div class="dev-nav">
         <button id="prev-day" aria-label="Previous Devotional">←</button>
@@ -279,6 +288,7 @@
       <div id="devotional-text">Loading devotional...</div>
       <button id="share-devotional" class="button" style="max-width:200px;margin-top:1rem;">Share</button>
       <div class="back-button" onclick="showPage('home-page')">⬅️ Back to Home</div>
+      </div>
     </div>
   </main>
   <footer>Connect and Support!</footer>
