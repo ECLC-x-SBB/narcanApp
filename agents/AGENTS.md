@@ -191,6 +191,7 @@ function showPage(pageId) {
     { once: true }
   );
 }
+```
 And the CSS uses @keyframes fadeIn = 1000ms. The ripple is now visible before the page content switches.
 
 5.3. “Generate unit tests for resetTestData()”
@@ -200,10 +201,7 @@ TestAgent: Write a unit test in Google Apps Script (GS) that ensures resetTestDa
 
 Expected Result:
 Codex produces tests/server/resetTestData.test.gs with a test like:
-
-js
-Copy
-Edit
+```js
 function testResetTestDataLeavesHeadersIntact() {
   // 1) Create a temporary spreadsheet with 5 rows
   const ss = SpreadsheetApp.create('ResetTest');
@@ -222,14 +220,15 @@ function testResetTestDataLeavesHeadersIntact() {
     throw new Error('resetTestData failed—rows not cleared correctly');
   }
 }
-6. Adding or Updating Agents
+```
+## 6. Adding or Updating Agents
 To create a brand‐new agent, give it a name (e.g. SecurityAgent) and add a new section under “## 2. Agent Definitions” describing its role, capabilities, and when to use it.
 
 To modify an existing agent (e.g. UIStylingAgent), update that section in AGENTS.md. Agents communicate best when you keep instructions concise, list specific responsibilities, and point out coding conventions to follow.
 
 Always include at least one concrete example of “Prompt → Expected result” so Codex can calibrate its output.
 
-7. Best Practices & Tips
+## 7. Best Practices & Tips
 Be as specific as possible when assigning tasks: mention file paths, function names, and variable names.
 
 Preserve existing styles (colors, fonts, and layout) unless asked otherwise.
