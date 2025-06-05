@@ -3,45 +3,50 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="manifest" href="/manifest.json">
+  <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0b3d91">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="ECLC">
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/eclc-logo192-test.png">
-  <link rel="apple-touch-icon" sizes="167x167" href="/assets/icons/eclc-logo512-test.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/eclc-logo192-test.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="assets/icons/eclc-logo512-test.png">
   <title>ECLC Connect and Support</title>
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="header">
     <div class="header-left" style="cursor:pointer" onClick="showPage('home-page')">Support. Educate.</div>
-    <img 
-      src="/assets/images/eclc-logo.png" 
+    <img
+      src="assets/images/eclc-logo.png"
       alt="ECLC Logo" 
       class="logo"
       id="site-logo"
       style="cursor:pointer;"
       onClick="showPage('home-page')"
       />
-    <div class="header-right" style="cursor:pointer" onClick="showPage('home-page')">Advocate. Resilience.</div>
+    <div class="header-right">Advocate. Resilience.
+      <button class="link-button" id="account-btn" style="display:inline-block;margin-left:10px;" onclick="showPage('login-page')">Sign Up / Login</button>
+    </div>
   </div>
   <main>
     <div id="home-page" class="page active">
-      <button class="button" onclick="showPage('picked-up-page')">I Picked Up Narcan</button>
-      <button class="button" onclick="showPage('report-use-page')">Report Narcan Use</button>
-      <button class="link-button" onClick="showPage('volunteer-page')">Volunteer with ECLC!</button>
-      <button class="link-button" onclick="showPage('contact-page')">Contact ECLC</button>
-      <button class="link-button" onclick="showPage('resources-page')">Community Resources</button>
-      <button class="link-button" onclick="showPage('impact-page')">Community Impact</button>
-      <button class="link-button" onclick="showPage('devotional-page')">Recovery Devotional</button>
-      <button class="button" id="install-btn" style="display:none">Connect and Support with the ECLC App!</button>
+      <div class="home-buttons">
+        <button class="button" onclick="showPage('picked-up-page')">I Picked Up Narcan</button>
+        <button class="button" onclick="showPage('report-use-page')">Report Narcan Use</button>
+        <button class="link-button" onClick="showPage('volunteer-page')">Volunteer with ECLC!</button>
+        <button class="link-button" onclick="showPage('contact-page')">Contact ECLC</button>
+        <button class="link-button" onclick="showPage('resources-page')">Community Resources</button>
+        <button class="link-button" onclick="showPage('impact-page')">Community Impact</button>
+        <button class="link-button" onclick="showPage('devotional-page')">Recovery Devotional</button>
+        <button class="button" id="install-btn" style="display:none">Connect and Support with the ECLC App!</button>
+      </div>
     </div>
     <div id="picked-up-page" class="page">
       <div class="form-container" id="pickup-container">
         <h2>I Picked Up Narcan</h2>
         <form id="pickup-form">
           <input type="hidden" name="formType" value="pickup">
+          <input type="hidden" name="userEmail" id="pickup-email">
           <label for="boxes">How many boxes were picked up?</label>
           <input
             type="number"
@@ -67,35 +72,6 @@
             <option value="Male">Male</option>
             <option value="Female">Female</option>
           </select>
-          <label for="ethnicity">Ethnicity (Optional)</label>
-          <select id="ethnicity" name="ethnicity">
-            <option value="" disabled selected hidden>Select your ethnicity</option>
-            <option value="White">White</option>
-            <option value="Black or African American">Black or African American</option>
-            <option value="Hispanic or Latino">Hispanic or Latino</option>
-            <option value="Native American or Alaska Native">Native American or Alaska Native</option>
-            <option value="Asian">Asian</option>
-            <option value="Pacific Islander or Native Hawaiian">Pacific Islander or Native Hawaiian</option>
-            <option value="Multiracial">Multiracial</option>
-          </select>
-          <label for="education">Education Level (Optional)</label>
-          <select id="education" name="education">
-            <option value="" disabled selected hidden>Select your education</option>
-            <option value="Less than high school">Less than high school</option>
-            <option value="High School diploma or GED">High School diploma or GED</option>
-            <option value="Some College">Some College</option>
-            <option value="Associate's Degree">Associate's Degree</option>
-            <option value="Bachelor's Degree">Bachelor's Degree</option>
-            <option value="Graduate or Professional Degree">Graduate or Professional Degree</option>
-          </select>
-          <label for="relationship">Relationship Status (Optional)</label>
-          <select id="relationship" name="relationship">
-            <option value="" disabled selected hidden>Select relationship status</option>
-            <option value="Single">Single</option>
-            <option value="In a relationship">In a relationship</option>
-            <option value="Married">Married</option>
-            <option value="Separated">Separated</option>
-            <option value="Divorced">Divorced</option>
             <option value="Widowed">Widowed</option>
           </select>
           <label for="comments">Any other information? (Optional)</label>
@@ -123,6 +99,7 @@
         <h2>Report Narcan Use</h2>
         <form id="report-form">
           <input type="hidden" name="formType" value="use">
+          <input type="hidden" name="userEmail" id="report-email">
           <label for="doses">How many doses administered? *Two per box*</label>
           <input
             type="number"
@@ -175,6 +152,7 @@
         <h2>Volunteer with ECLC today!</h2>
         <form id="volunteer-form">
           <input type="hidden" name="formType" value="volunteer">
+          <input type="hidden" name="userEmail" id="volunteer-email">
         <p style="margin-bottom: 1.5rem; font-size: 1rem; line-height: 1.5;">
           Thank you for considering volunteering with ECLC!
           Please fill out each of the fields below and don't forget to Submit!
@@ -200,54 +178,8 @@
           id="vol-phone"
           name="phone"
           maxlength="14"
-          required
-        >
-        <label for="vol-contactPref">How would you like us to contact you? (Required)</label>
-        <select id="vol-contactPref" name="contactPref" required>
-          <option value="" disabled selected hidden>Select your contact preference</option>
-          <option value="email">Email</option>
-          <option value="message">Text Message</option>
-          <option value="call">Phone Call</option>
-        </select>
-        <label for="vol-experience">Do you have any experience with Recovery or Volunteering? (Required)</label>
-        <textarea
-          id="vol-experience"
-          name="experience"
-          rows="4"
-          required
-         ></textarea> 
-         <button type="submit" class="button">Submit</button>
-        </form>
-        <div class="back-button" onclick="showPage('home-page')">
-          ⬅️ Back to Home
-        </div>
-      </div>
-    </div>
-    <div id="contact-page" class="page">
-      <h2>Contact ECLC</h2>
-      <div class="map-container">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d253861.71266806905!2d-87.49288226143204!3d30.419463860282817!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8895c6f71e19b821%3A0xf36f913b34ce0255!2s518%20US%20Hwy%2090%2C%20Holt%2C%20FL%2032564!5e0!3m2!1sen!2sus!4v1686020473412!5m2!1sen!2sus"
-          width="100%"
-          height="250"
-          style="border:0;"
-          allowfullscreen=""
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade">
-        </iframe>
-      </div>
-      <p>
-        <a
-          href="https://www.google.com/maps/search/?api=1&query=518+US+Hwy+90+Holt+Florida+32564"
-          target="_blank"
-          rel="noopener"
-        >518 US HWY 90, Holt, FL 32564</a>
-      </p>
-      <p><a href="tel:+18506125640" class="link-button">Call Us</a></p>
-      <p><a href="mailto:emeraldcoastlifecenter@gmail.com" class="link-button">Email Us</a></p>
-      <div class="back-button" onclick="showPage('home-page')">⬅️ Back to Home</div>
-    </div>
     <div id="resources-page" class="page">
+      <div class="form-container">
       <h2>Community Resources</h2>
       <ul class="resources">
         <li><a href="https://emeraldcoastlifecenter.org" target="_blank">Lighthouse @ Emerald Coast Life Center</a></li>
@@ -256,8 +188,10 @@
         <li><a href="https://988lifeline.org" target="_blank">24/7 Crisis Hotline</a></li>
       </ul>
       <div class="back-button" onclick="showPage('home-page')">⬅️ Back to Home</div>
+      </div>
     </div>
     <div id="impact-page" class="page">
+      <div class="form-container">
       <h2>Community Impact</h2>
       <label for="impact-range">Select Range:</label><br>
       <select id="impact-range" onchange="updateImpact()">
@@ -267,8 +201,64 @@
       </select>
       <div id="impact-stats"></div>
       <div class="back-button" onclick="showPage('home-page')">⬅️ Back to Home</div>
+      </div>
+    </div>
+    <div id="my-impact-page" class="page">
+      <div class="form-container">
+      <h2>My Impact</h2>
+      <label for="my-impact-range">Select Range:</label><br>
+      <select id="my-impact-range" onchange="updateMyImpact()">
+        <option value="week">This Week</option>
+        <option value="month" selected>This Month</option>
+        <option value="year">This Year</option>
+      </select>
+      <div id="my-impact-stats"></div>
+      <div class="back-button" onclick="showPage('home-page')">⬅️ Back to Home</div>
+      </div>
+    </div>
+    <div id="login-page" class="page">
+      <div class="form-container">
+      <h2>Login</h2>
+      <form id="login-form">
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" required>
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" required>
+        <button type="submit" class="button">Login</button>
+      </form>
+      <p style="text-align:center;margin-top:1rem;">
+        <a href="#" onclick="showPage('signup-page')">Create account</a>
+      </p>
+      <div class="back-button" onclick="showPage('home-page')">⬅️ Back to Home</div>
+      </div>
+    </div>
+    <div id="signup-page" class="page">
+      <div class="form-container">
+      <h2>Sign Up</h2>
+      <form id="signup-form">
+        <input type="hidden" name="formType" value="signup">
+        <label for="signup-name">Name</label>
+        <input type="text" id="signup-name" name="name" required>
+        <label for="signup-email">Email</label>
+        <input type="email" id="signup-email" name="email" required>
+        <label for="signup-password">Password</label>
+        <input type="password" id="signup-password" name="password" required>
+        <button type="submit" class="button">Sign Up</button>
+      </form>
+      <div class="back-button" onclick="showPage('home-page')">⬅️ Back to Home</div>
+      </div>
+    </div>
+    <div id="account-page" class="page">
+      <div class="form-container">
+      <h2>My Account</h2>
+      <p id="account-greeting"></p>
+      <button class="button" onclick="showPage('my-impact-page')">View My Impact</button>
+      <button class="link-button" onclick="logout()">Logout</button>
+      <div class="back-button" onclick="showPage('home-page')">⬅️ Back to Home</div>
+      </div>
     </div>
     <div id="devotional-page" class="page">
+      <div class="form-container">
       <h2>Recovery Devotional</h2>
       <div class="dev-nav">
         <button id="prev-day" aria-label="Previous Devotional">←</button>
@@ -281,7 +271,14 @@
       <div class="back-button" onclick="showPage('home-page')">⬅️ Back to Home</div>
     </div>
   </main>
+      <p id="devotional-verse">Loading verse...</p>
+      <div id="devotional-text">Loading devotional...</div>
+      <button id="share-devotional" class="button" style="max-width:200px;margin-top:1rem;">Share</button>
+      <div class="back-button" onclick="showPage('home-page')">⬅️ Back to Home</div>
+      </div>
+    </div>
+  </main>
   <footer>Connect and Support!</footer>
-  <script src="/app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
