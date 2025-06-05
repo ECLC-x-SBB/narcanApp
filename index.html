@@ -24,7 +24,9 @@
       style="cursor:pointer;"
       onClick="showPage('home-page')"
       />
-    <div class="header-right" style="cursor:pointer" onClick="showPage('home-page')">Advocate. Resilience.</div>
+    <div class="header-right" style="cursor:pointer" onClick="showPage('home-page')">Advocate. Resilience.
+      <button class="link-button" id="account-btn" style="display:inline-block;margin-left:10px;" onclick="showPage('login-page')">Sign Up / Login</button>
+    </div>
   </div>
   <main>
     <div id="home-page" class="page active">
@@ -315,6 +317,7 @@
       <div class="form-container">
       <h2>Sign Up</h2>
       <form id="signup-form">
+        <input type="hidden" name="formType" value="signup">
         <label for="signup-name">Name</label>
         <input type="text" id="signup-name" name="name" required>
         <label for="signup-email">Email</label>
@@ -323,6 +326,15 @@
         <input type="password" id="signup-password" name="password" required>
         <button type="submit" class="button">Sign Up</button>
       </form>
+      <div class="back-button" onclick="showPage('home-page')">⬅️ Back to Home</div>
+      </div>
+    </div>
+    <div id="account-page" class="page">
+      <div class="form-container">
+      <h2>My Account</h2>
+      <p id="account-greeting"></p>
+      <button class="button" onclick="showPage('my-impact-page')">View My Impact</button>
+      <button class="link-button" onclick="logout()">Logout</button>
       <div class="back-button" onclick="showPage('home-page')">⬅️ Back to Home</div>
       </div>
     </div>

@@ -99,7 +99,7 @@ function doPost(e) {
 
 function resetTestData() {
   const ss = SpreadsheetApp.openById(SS_ID);
-  [SHEET_PICKUP, SHEET_USE, SHEET_VOLUNTEERS].forEach(name => {
+  [SHEET_PICKUP, SHEET_USE, SHEET_VOLUNTEERS, SHEET_USERS].forEach(name => {
     const sh = ss.getSheetByName(name);
     const lastRow = sh.getLastRow();
     const lastCol = sh.getLastColumn();
