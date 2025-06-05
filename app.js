@@ -37,6 +37,22 @@ function setUser(email,name){
     localStorage.removeItem('userName');
     btn.textContent='Sign Up / Login';
     btn.onclick=()=>showPage('login-page');
+=======
+async function sha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+function setUser(email,name){
+  if(email){
+    localStorage.setItem('userEmail', email);
+    localStorage.setItem('userName', name||'');
+    document.getElementById('login-btn').style.display='none';
+    document.getElementById('logout-btn').style.display='inline-block';
+  } else {
+    localStorage.removeItem('userEmail');
+    localStorage.removeItem('userName');
+    document.getElementById('login-btn').style.display='inline-block';
+    document.getElementById('logout-btn').style.display='none';
   }
   autoFillForms();
 }
@@ -60,6 +76,7 @@ function handleLogin(res){
     const greet=document.getElementById('account-greeting');
     if(greet) greet.textContent = res.name ? `Welcome, ${res.name}!` : `Welcome, ${res.email}!`;
     showPage('account-page');
+    showPage('home-page');
   }else{
     alert('Invalid login');
   }
@@ -71,6 +88,11 @@ function loginSubmit(e){
   const s=document.createElement('script');
   s.src=`${GAS_URL}?action=login&email=${encodeURIComponent(email)}&password=${encodeURIComponent(pass)}&callback=handleLogin`;
   document.body.appendChild(s);
+  sha256(pass).then(hash=>{
+    const s=document.createElement('script');
+    s.src=`${GAS_URL}?action=login&email=${encodeURIComponent(email)}&password=${hash}&callback=handleLogin`;
+    document.body.appendChild(s);
+  });
 }
 function signupSubmit(e){
   e.preventDefault();
@@ -100,6 +122,7 @@ function updateAccountPage(){
   const email=localStorage.getItem('userEmail')||'';
   if(greet) greet.textContent = name ? `Welcome, ${name}!` : `Welcome, ${email}!`;
 }
+    function handleImpact(data) {
     function handleImpact(data) {
       document.getElementById('impact-stats').innerHTML = `
         <p>Total Boxes Picked Up: ${data.pickedUp}</p>
@@ -189,6 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateMyImpact();
     updateAccountPage();
   }
+  if(email) updateMyImpact();
 });
 const phoneInput = document.getElementById('vol-phone');
 phoneInput.addEventListener('input', () => {
