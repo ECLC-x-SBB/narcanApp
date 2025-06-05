@@ -72,7 +72,6 @@
             <option value="Male">Male</option>
             <option value="Female">Female</option>
           </select>
-@@ -101,104 +104,106 @@
             <option value="Widowed">Widowed</option>
           </select>
           <label for="comments">Any other information? (Optional)</label>
@@ -179,7 +178,6 @@
           id="vol-phone"
           name="phone"
           maxlength="14"
-@@ -254,44 +259,98 @@
     <div id="resources-page" class="page">
       <div class="form-container">
       <h2>Community Resources</h2>
@@ -267,6 +265,12 @@
         <span id="dev-date">Loading...</span>
         <button id="next-day" aria-label="Next Devotional">→</button>
       </div>
+      <p id="devotional-verse">Loading verse...</p>
+      <div id="devotional-text">Loading devotional...</div>
+      <button id="share-devotional" class="button" style="max-width:200px;margin-top:1rem;">Share</button>
+      <div class="back-button" onclick="showPage('home-page')">⬅️ Back to Home</div>
+    </div>
+  </main>
       <p id="devotional-verse">Loading verse...</p>
       <div id="devotional-text">Loading devotional...</div>
       <button id="share-devotional" class="button" style="max-width:200px;margin-top:1rem;">Share</button>
