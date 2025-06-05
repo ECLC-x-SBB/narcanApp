@@ -157,8 +157,7 @@ const livesSaved = useF.filter(r => r[2]==='Overdose Reversal').length;
 const hospitalized = useF.filter(r => r[4]==='Yes').length;
 
 const result = {
-  pickedUp: totalBoxes,
-  dosesPickedUp: dosesPickedUp,
+  pickedUp: dosesPickedUp,
   dosesUsed: totalUsed,
   livesSaved: livesSaved,
   hospitalizations: hospitalized
