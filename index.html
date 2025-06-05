@@ -24,7 +24,9 @@
       style="cursor:pointer;"
       onClick="showPage('home-page')"
       />
-    <div class="header-right" style="cursor:pointer" onClick="showPage('home-page')">Advocate. Resilience.</div>
+    <div class="header-right" style="cursor:pointer" onClick="showPage('home-page')">Advocate. Resilience.
+      <button class="link-button" id="account-btn" style="display:inline-block;margin-left:10px;" onclick="showPage('login-page')">Sign Up / Login</button>
+    </div>
   </div>
   <main>
     <div id="home-page" class="page active">
@@ -44,6 +46,7 @@
         <h2>I Picked Up Narcan</h2>
         <form id="pickup-form">
           <input type="hidden" name="formType" value="pickup">
+          <input type="hidden" name="userEmail" id="pickup-email">
           <label for="boxes">How many boxes were picked up?</label>
           <input
             type="number"
@@ -125,6 +128,7 @@
         <h2>Report Narcan Use</h2>
         <form id="report-form">
           <input type="hidden" name="formType" value="use">
+          <input type="hidden" name="userEmail" id="report-email">
           <label for="doses">How many doses administered? *Two per box*</label>
           <input
             type="number"
@@ -177,6 +181,7 @@
         <h2>Volunteer with ECLC today!</h2>
         <form id="volunteer-form">
           <input type="hidden" name="formType" value="volunteer">
+          <input type="hidden" name="userEmail" id="volunteer-email">
         <p style="margin-bottom: 1.5rem; font-size: 1rem; line-height: 1.5;">
           Thank you for considering volunteering with ECLC!
           Please fill out each of the fields below and don't forget to Submit!
@@ -273,6 +278,60 @@
         <option value="year">This Year</option>
       </select>
       <div id="impact-stats"></div>
+      <div class="back-button" onclick="showPage('home-page')">⬅️ Back to Home</div>
+      </div>
+    </div>
+    <div id="my-impact-page" class="page">
+      <div class="form-container">
+      <h2>My Impact</h2>
+      <label for="my-impact-range">Select Range:</label><br>
+      <select id="my-impact-range" onchange="updateMyImpact()">
+        <option value="week">This Week</option>
+        <option value="month" selected>This Month</option>
+        <option value="year">This Year</option>
+      </select>
+      <div id="my-impact-stats"></div>
+      <div class="back-button" onclick="showPage('home-page')">⬅️ Back to Home</div>
+      </div>
+    </div>
+    <div id="login-page" class="page">
+      <div class="form-container">
+      <h2>Login</h2>
+      <form id="login-form">
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" required>
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" required>
+        <button type="submit" class="button">Login</button>
+      </form>
+      <p style="text-align:center;margin-top:1rem;">
+        <a href="#" onclick="showPage('signup-page')">Create account</a>
+      </p>
+      <div class="back-button" onclick="showPage('home-page')">⬅️ Back to Home</div>
+      </div>
+    </div>
+    <div id="signup-page" class="page">
+      <div class="form-container">
+      <h2>Sign Up</h2>
+      <form id="signup-form">
+        <input type="hidden" name="formType" value="signup">
+        <label for="signup-name">Name</label>
+        <input type="text" id="signup-name" name="name" required>
+        <label for="signup-email">Email</label>
+        <input type="email" id="signup-email" name="email" required>
+        <label for="signup-password">Password</label>
+        <input type="password" id="signup-password" name="password" required>
+        <button type="submit" class="button">Sign Up</button>
+      </form>
+      <div class="back-button" onclick="showPage('home-page')">⬅️ Back to Home</div>
+      </div>
+    </div>
+    <div id="account-page" class="page">
+      <div class="form-container">
+      <h2>My Account</h2>
+      <p id="account-greeting"></p>
+      <button class="button" onclick="showPage('my-impact-page')">View My Impact</button>
+      <button class="link-button" onclick="logout()">Logout</button>
       <div class="back-button" onclick="showPage('home-page')">⬅️ Back to Home</div>
       </div>
     </div>
