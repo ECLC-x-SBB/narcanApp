@@ -1,6 +1,6 @@
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
+        navigator.serviceWorker.register('sw.js')
         .catch(err => console.error('SW registration failed:', err));
       });
     }
@@ -24,7 +24,82 @@
       deferredPrompt = null;
       installBtn.style.display = 'none'
     });
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbxRVZcd0nZnjTBvwPTaHIsUck5wKHU8iEfmYaazWHIuqR0p8kLG6BrwqC-VCwNlHwRERg/exec'; 
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbxRVZcd0nZnjTBvwPTaHIsUck5wKHU8iEfmYaazWHIuqR0p8kLG6BrwqC-VCwNlHwRERg/exec';
+function setUser(email,name){
+  const btn = document.getElementById('account-btn');
+  if(email){
+    localStorage.setItem('userEmail', email);
+    localStorage.setItem('userName', name||'');
+    btn.textContent='Account';
+    btn.onclick=()=>showPage('account-page');
+  } else {
+    localStorage.removeItem('userEmail');
+    localStorage.removeItem('userName');
+    btn.textContent='Sign Up / Login';
+    btn.onclick=()=>showPage('login-page');
+  }
+  autoFillForms();
+}
+function logout(){
+  setUser(null);
+  showPage('home-page');
+}
+function autoFillForms(){
+  const email = localStorage.getItem('userEmail') || '';
+  const name = localStorage.getItem('userName') || '';
+  document.getElementById('pickup-email').value = email;
+  document.getElementById('report-email').value = email;
+  document.getElementById('volunteer-email').value = email;
+  document.querySelector('#pickup-form input[name="name"]').value = name;
+  document.querySelector('#report-form input[name="name"]').value = name;
+}
+function handleLogin(res){
+  if(res.status==='ok'){
+    alert('Login successful');
+    setUser(res.email,res.name);
+    const greet=document.getElementById('account-greeting');
+    if(greet) greet.textContent = res.name ? `Welcome, ${res.name}!` : `Welcome, ${res.email}!`;
+    showPage('account-page');
+  }else{
+    alert('Invalid login');
+  }
+}
+function loginSubmit(e){
+  e.preventDefault();
+  const email = document.getElementById('login-email').value;
+  const pass = document.getElementById('login-password').value;
+  const s=document.createElement('script');
+  s.src=`${GAS_URL}?action=login&email=${encodeURIComponent(email)}&password=${encodeURIComponent(pass)}&callback=handleLogin`;
+  document.body.appendChild(s);
+}
+function signupSubmit(e){
+  e.preventDefault();
+  const form=new FormData(document.getElementById('signup-form'));
+  fetch(GAS_URL,{method:'POST',mode:'no-cors',body:form})
+    .then(()=>{alert('Signup submitted');showPage('login-page');})
+    .catch(()=>alert('Signup error'));
+}
+function updateMyImpact(){
+  const email = localStorage.getItem('userEmail');
+  if(!email){ document.getElementById('my-impact-stats').textContent='Please log in.'; return; }
+  const range=document.getElementById('my-impact-range').value;
+  const s=document.createElement('script');
+  s.src=`${GAS_URL}?action=impactUser&email=${encodeURIComponent(email)}&range=${range}&callback=handleMyImpact`;
+  document.body.appendChild(s);
+}
+function handleMyImpact(data){
+  document.getElementById('my-impact-stats').innerHTML = `
+    <p>Boxes Picked Up: ${data.pickedUp}</p>
+    <p>Doses Used: ${data.dosesUsed}</p>
+    <p>Lives Saved: ${data.livesSaved}</p>
+    <p>Hospitalizations: ${data.hospitalizations}</p>`;
+}
+function updateAccountPage(){
+  const greet=document.getElementById('account-greeting');
+  const name=localStorage.getItem('userName')||'';
+  const email=localStorage.getItem('userEmail')||'';
+  if(greet) greet.textContent = name ? `Welcome, ${name}!` : `Welcome, ${email}!`;
+}
     function handleImpact(data) {
       document.getElementById('impact-stats').innerHTML = `
         <p>Total Boxes Picked Up: ${data.pickedUp}</p>
@@ -45,6 +120,8 @@
         () => next.classList.remove('fade-in'),
         {once: true}
       );
+      if(pageId==='my-impact-page') updateMyImpact();
+      if(pageId==='account-page') updateAccountPage();
     }
     function pickupSuccess() {
       const name = document.querySelector('#pickup-form input[name="name"]').value;
@@ -97,11 +174,21 @@ document.addEventListener('DOMContentLoaded', () => {
   wire('pickup-form', pickupSuccess);
   wire('report-form', reportSuccess);
   wire('volunteer-form', volunteerSuccess);
+  const loginForm = document.getElementById('login-form');
+  if (loginForm) loginForm.addEventListener('submit', loginSubmit);
+  const signupForm = document.getElementById('signup-form');
+  if (signupForm) signupForm.addEventListener('submit', signupSubmit);
   const savedRange = localStorage.getItem('impactRange');
   if (savedRange) {
     document.getElementById('impact-range').value = savedRange;
   }
   updateImpact();
+  const email = localStorage.getItem('userEmail');
+  setUser(email,email?localStorage.getItem('userName'):null);
+  if(email){
+    updateMyImpact();
+    updateAccountPage();
+  }
 });
 const phoneInput = document.getElementById('vol-phone');
 phoneInput.addEventListener('input', () => {
@@ -127,7 +214,7 @@ let currentDate = new Date();
 async function loadDevotional(d = new Date()) {
   try {
     if (!devosData) {
-      const resp = await fetch('/devotions.json');
+      const resp = await fetch('devotions.json');
       devosData = await resp.json();
     }
     const key = `${d.getMonth()+1}-${d.getDate()}`;
