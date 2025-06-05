@@ -1,4 +1,4 @@
-    if ('serviceWorker' in navigator) {
+  if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('sw.js')
         .catch(err => console.error('SW registration failed:', err));
@@ -148,7 +148,7 @@ function updateAccountPage(){
       ['reversal','death'].forEach(i => { if (i !== id) document.getElementById(i).checked = false; });
     }
 function updateImpact() {
-  const range = document.getElementById('impact-range').value;
+@@ -75,81 +152,91 @@ function updateImpact() {
   localStorage.setItem('impactRange', range);
   const s = document.createElement('script');
   s.src = `${GAS_URL}?action=impact&range=${range}&callback=handleImpact`;
@@ -240,70 +240,3 @@ async function loadDevotional(d = new Date()) {
     document.getElementById('dev-date').textContent = '';
     document.getElementById('devotional-verse').textContent =
       'Error loading devotional';
-    document.getElementById('devotional-text').innerHTML = 
-      "<p>Sorry, we couldn't load today's devotional. Please try again later.</p>";
-  }
-}
-function shiftDay(offset) {
-  currentDate.setDate(currentDate.getDate() + offset);
-  loadDevotional(currentDate);
-}
-function shareDevotional() {
-  const verse = document.getElementById('devotional-verse').textContent;
-  const text = Array.from(document.getElementById('devotional-text').children)
-    .map(p => p.textContent)
-    .join('\n\n');
-  const shareData = {
-    title: 'ECLC Daily Devotional',
-    text: `${verse}\n\n${text}`,
-    url: window.location.href
-  };
-  if (navigator.share) {
-    navigator.share(shareData).catch(err => console.error('Share failed', err));
-  } else if (navigator.clipboard) {
-    navigator.clipboard.writeText(`${verse}\n\n${text}\n${window.location.href}`)
-      .then(() => alert('Devotional copied to clipboard!'))
-      .catch(err => console.error('Copy failed', err));
-  } else {
-    alert('Sharing not supported on this browser');
-  }
-}
-document.addEventListener('DOMContentLoaded', () => {
-  loadDevotional(currentDate);
-  document.getElementById('prev-day')
-    .addEventListener('click', () => shiftDay(-1));
-  document.getElementById('next-day')
-    .addEventListener('click', () => shiftDay(1));
-  const shareBtn = document.getElementById('share-devotional');
-  if (shareBtn) {
-    shareBtn.addEventListener('click', shareDevotional);
-  }
-});
-window.addEventListener('DOMContentLoaded', () => {
-  if (isiOS && !window.navigator.standalone) {
-    const tip = document.createElement('div');
-    tip.className = 'ios-install-tip';
-    tip.textContent = 'To install: tap Share → Add to Home Screen';
-    document.body.append(tip);
-    setTimeout(() => tip.remove(), 15000);
-  }
-});
-document.querySelectorAll('.button').forEach(btn => {
-
-  btn.addEventListener('click', function(e) {
-    
-    const ripple = document.createElement('span');
-    ripple.classList.add('ripple');
-    
-    const size = Math.max(this.offsetWidth, this.offsetHeight);
-    ripple.style.width = ripple.style.height = `${size}px`;
-    
-    const rect = this.getBoundingClientRect();
-    ripple.style.left = `${e.clientX - rect.left - size/2}px`;
-    ripple.style.top = `${e.clientY - rect.top - size/2}px`;
-    
-    this.appendChild(ripple);
-    
-    ripple.addEventListener('animationend', () => ripple.remove());
-  });
-});
