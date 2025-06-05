@@ -75,8 +75,16 @@ function loginSubmit(e){
 function signupSubmit(e){
   e.preventDefault();
   const form=new FormData(document.getElementById('signup-form'));
-  fetch(GAS_URL,{method:'POST',mode:'no-cors',body:form})
-    .then(()=>{alert('Signup submitted');showPage('login-page');})
+  fetch(GAS_URL,{method:'POST',body:form})
+    .then(res=>res.json())
+    .then(data=>{
+      if(data.status==='success'){
+        alert('Signup submitted');
+        showPage('login-page');
+      } else {
+        throw new Error('Signup error');
+      }
+    })
     .catch(()=>alert('Signup error'));
 }
 function updateMyImpact(){
@@ -160,10 +168,16 @@ function wire(formId, onSuccess) {
     e.preventDefault();
     fetch(GAS_URL, {
       method: 'POST',
-      mode: 'no-cors',
       body: new FormData(form)
     })
-    .then(() => onSuccess())
+    .then(res => res.json())
+    .then(data => {
+      if (data.status === 'success') {
+        onSuccess();
+      } else {
+        throw new Error('Server error');
+      }
+    })
     .catch(err => {
       console.error(err);
       alert('Sorry, there was an error submitting the form');
