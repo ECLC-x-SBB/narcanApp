@@ -35,6 +35,19 @@ function doPost(e) {
       params.comments || '',      
       params.name || ''           
     ];
+    const recipient = 'emeraldcoastlifecenter@gmail.com';
+    const subject = 'New Narcan Pick-Up Submission from ' + (params.name || 'anonymous');
+    const body = 
+      'A new Narcan Pick-Up form has been submitted:\n\n' +
+      'Amount Picked Up: ' + (params.boxes) + '\n' +
+      'Users age: ' + (params.age || 'Not given') + '\n' +
+      'Sex: ' + (params.sex || 'Not given') + '\n' +
+      'Ethnicity: ' + (params.ethnicity || 'Not given') + '\n' +
+      'Education: ' + (params.education || 'Not given') + '\n' +
+      'Relationship Status: ' + (params.relationship || 'Not given') + '\n' +
+      'Additional comments: ' + (params.comments || 'None added') + '\n\n' +
+      '- This email was sent automatically by your Apps Script.';
+    MailApp.sendEmail(recipient, subject, body);
   } 
   else if (params.formType === 'use') {  
     row = [
@@ -46,6 +59,17 @@ function doPost(e) {
       params.comments || '',      
       params.name || ''           
     ];
+    const recipient = 'emeraldcoastlifecenter@gmail.com';
+    const subject = 'New Narcan Use Submission from ' + (params.name || 'anonymous');
+    const body = 
+      'A new Narcan Use form has been submitted:\n\n' +
+      'Doses Administered: ' + (params.doses) + '\n' +
+      'Result following Narcan administration: ' + (params.result) + '\n' +
+      'Was 911 Called?: ' + (params.called911) + '\n' +
+      'Did they go to the hospital?: ' + (params.hospital) + '\n' +
+      'Additional comments: ' + (params.comments || 'None added') + '\n\n' +
+      '- This email was sent automatically by your Apps Script.';
+    MailApp.sendEmail(recipient, subject, body);
   }
   else {
     row = [
@@ -151,3 +175,62 @@ return ContentService
   .createTextOutput(js)
   .setMimeType(ContentService.MimeType.JAVASCRIPT);
   }
+
+function monthlySummaryReport() {
+  const ss = SpreadsheetApp.openById(SS_ID);
+  const now = new Date();
+
+  let month = now.getMonth() - 1;
+  let year = now.getFullYear();
+  if (month < 0) {month = 11; year -= 1; }
+
+  const isInMonth = date =>
+    date instanceof Date &&
+    date.getMonth() === month &&
+    date.getFullYear() === year;
+
+  const pickupVals = ss.getSheetByName(SHEET_PICKUP)
+    .getDataRange()
+    .getValues();
+  let totalBoxes = 0, pickupCount = 0;
+  pickupVals.forEach(row => {
+    if (isInMonth(row[0])) {
+      pickupCount++;
+      totalBoxes += Number(row[1]) || 0;
+    }
+  });
+
+  const useVals = ss.getSheetByName(SHEET_USE)
+    .getDataRange()
+    .getValues();
+  let totalDoses = 0, useCount = 0;
+  useVals.forEach(row => {
+    if (isInMonth(row[0])) {
+      useCount++;
+      totalDoses += Number(row[1]) || 0;
+    }
+  });
+
+  const volVals = ss.getSheetByName(SHEET_VOLUNTEERS)
+    .getDataRange()
+    .getValues();
+
+  const newVols = volVals.filter(row => isInMonth(row[0])).length;
+
+  const subject = `ECLC Monthly Report: ${year}-${String(month+1).padStart(2,'0')}`;
+  const body = 
+    `Here's your ${year}-${String(month+1).padStart(2,'0')} summary:
+    
+    • Pick-up forms: ${pickupCount} submissions
+      -Total boxes taken: ${totalBoxes}
+      
+    • Administered forms: ${useCount} submissions
+      -Total doses: ${totalDoses}
+      
+    • New volunteer sign-ups: ${newVols}
+    
+    -End of report (automated by Apps Script)
+    `.trim();
+
+    MailApp.sendEmail('emeraldcoastlifecenter@gmail.com', subject, body);
+}
