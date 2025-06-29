@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#0b3d91">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="ECLC">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/eclc-logo192-test.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="/assets/icons/eclc-logo512-test.png">
+  <title>ECLC Connect and Support</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="header">
+    <div class="header-left" style="cursor:pointer" onClick="showPage('home-page')">Support. Educate.</div>
+    <img 
+      src="/assets/images/eclc-logo.png" 
+      alt="ECLC Logo" 
+      class="logo"
+      id="site-logo"
+      style="cursor:pointer;"
+      onClick="showPage('home-page')"
+      />
+    <div class="header-right" style="cursor:pointer" onClick="showPage('home-page')">Advocate. Resilience.</div>
+  </div>
+  <main>
+    <div id="home-page" class="page active">
+      <div class="home-buttons">
+        <button class="button" onclick="showPage('picked-up-page')">I Picked Up Narcan</button>
+        <button class="button" onclick="showPage('report-use-page')">Report Narcan Use</button>
+        <button class="link-button" onClick="showPage('volunteer-page')">Volunteer with ECLC!</button>
+        <button class="link-button" onclick="showPage('contact-page')">Contact ECLC</button>
+        <button class="link-button" onclick="showPage('resources-page')">Community Resources</button>
+        <button class="link-button" onclick="showPage('impact-page')">Community Impact</button>
+        <button class="link-button" onclick="showPage('devotional-page')">Recovery Devotional</button>
+        <button class="button" id="install-btn" style="display:none">Connect and Support with the ECLC App!</button>
+      </div>
+    </div>
+    <div id="picked-up-page" class="page">
+      <div class="form-container" id="pickup-container">
+        <h2>I Picked Up Narcan</h2>
+        <form id="pickup-form">
+          <input type="hidden" name="formType" value="pickup">
+          <label for="boxes">How many boxes were picked up?</label>
+          <input
+            type="number"
+            id="boxes"
+            name="boxes"
+            min="1"
+            required
+          >
+          <label for="age">Age (Optional)</label>
+          <select id="age" name="age">
+            <option value="" disabled selected hidden>Select your age</option>
+            <option value="Under 18">Under 18</option>
+            <option value="18-24">18-24</option>
+            <option value="25-34">25-34</option>
+            <option value="35-44">35-44</option>
+            <option value="45-54">45-54</option>
+            <option value="55-64">55-64</option>
+            <option value="65+">65+</option>
+          </select>
+          <label for="sex"> Sex (Optional)</label>
+          <select id="sex" name="sex">
+            <option value="" disabled selected hidden>Select your sex</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+          <label for="ethnicity">Ethnicity (Optional)</label>
+          <select id="ethnicity" name="ethnicity">
+            <option value="" disabled selected hidden>Select your ethnicity</option>
+            <option value="White">White</option>
+            <option value="Black or African American">Black or African American</option>
+            <option value="Hispanic or Latino">Hispanic or Latino</option>
+            <option value="Native American or Alaska Native">Native American or Alaska Native</option>
+            <option value="Asian">Asian</option>
+            <option value="Pacific Islander or Native Hawaiian">Pacific Islander or Native Hawaiian</option>
+            <option value="Multiracial">Multiracial</option>
+          </select>
+          <label for="education">Education Level (Optional)</label>
+          <select id="education" name="education">
+            <option value="" disabled selected hidden>Select your education</option>
+            <option value="Less than high school">Less than high school</option>
+            <option value="High School diploma or GED">High School diploma or GED</option>
+            <option value="Some College">Some College</option>
+            <option value="Associate's Degree">Associate's Degree</option>
+            <option value="Bachelor's Degree">Bachelor's Degree</option>
+            <option value="Graduate or Professional Degree">Graduate or Professional Degree</option>
+          </select>
+          <label for="relationship">Relationship Status (Optional)</label>
+          <select id="relationship" name="relationship">
+            <option value="" disabled selected hidden>Select relationship status</option>
+            <option value="Single">Single</option>
+            <option value="In a relationship">In a relationship</option>
+            <option value="Married">Married</option>
+            <option value="Separated">Separated</option>
+            <option value="Divorced">Divorced</option>
+            <option value="Widowed">Widowed</option>
+          </select>
+          <label for="comments">Any other information? (Optional)</label>
+          <textarea
+            id="comments"
+            name="comments"
+            rows="4"
+          >
+          </textarea>
+          <label for="name">Your Name (Optional)</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+          >
+          <button type="submit" class="button">Submit</button>            
+        </form>
+        <div class="back-button" onclick="showPage('home-page')">
+          ⬅️ Back to Home
+        </div>
+      </div>
+     </div> 
+    <div id="report-use-page" class="page">
+      <div class="form-container" id="report-container">
+        <h2>Report Narcan Use</h2>
+        <form id="report-form">
+          <input type="hidden" name="formType" value="use">
+          <label for="doses">How many doses administered? *Two per box*</label>
+          <input
+            type="number"
+            id="doses"
+            name="doses"
+            min="1"
+            required
+          >
+          <label for="result">Result?</label>
+          <select id="result" name="result" required>
+            <option value="" disabled selected hidden>Select</option>
+            <option value="Overdose Reversal">Overdose Reversal</option>
+            <option value="Overdose Death">Overdose Death</option>
+          </select>        
+          <label for="called911">Was 911 called?</label>
+          <select id="called911" name="called911" required> 
+            <option value="" disabled selected hidden>Select</option> 
+            <option value="Yes">Yes</option> 
+            <option value="No">No</option> 
+          </select>      
+          <label for="hospital">Did they go to the hospital?</label> 
+          <select id="hospital" name="hospital" required> 
+            <option value="" disabled selected hidden>Select</option> 
+            <option value="Yes">Yes</option> 
+            <option value="No">No</option> 
+            <option value="Unknown">Unknown</option> 
+          </select> 
+          <label for="comments">Any additional information? (Optional)</label>
+          <textarea
+            id="comments"
+            name="comments"
+            rows="4"
+          >
+          </textarea>
+          <label for="name">Your Name (Optional)</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+          >
+          <button type="submit" class="button">Submit</button>
+        </form>
+        <div class="back-button" onclick="showPage('home-page')">
+          ⬅️ Back to Home
+        </div>
+      </div>
+    </div>
+    <div id="volunteer-page" class="page">
+      <div class="form-container" id="volunteer-container">
+        <h2>Volunteer with ECLC today!</h2>
+        <form id="volunteer-form">
+          <input type="hidden" name="formType" value="volunteer">
+        <p style="margin-bottom: 1.5rem; font-size: 1rem; line-height: 1.5;">
+          Thank you for considering volunteering with ECLC!
+          Please fill out each of the fields below and don't forget to Submit!
+          Someone from our team will be in touch when we have a volunteer opportunity for you!
+        </p>
+        <label for="vol-name">Your Full Name (Required)</label>
+        <input
+          type="text"
+          id="vol-name"
+          name="name"
+          required
+        >
+        <label for="vol-email">Your Email Address (Required)</label>
+        <input
+          type="email"
+          id="vol-email"
+          name="email"
+          required
+        >
+        <label for="vol-phone">Phone Number (Required)</label>
+        <input
+          type="tel"
+          id="vol-phone"
+          name="phone"
+          maxlength="14"
+          required
+        >
+        <label for="vol-contactPref">How would you like us to contact you? (Required)</label>
+        <select id="vol-contactPref" name="contactPref" required>
+          <option value="" disabled selected hidden>Select your contact preference</option>
+          <option value="email">Email</option>
+          <option value="message">Text Message</option>
+          <option value="call">Phone Call</option>
+        </select>
+        <label for="vol-experience">Do you have any experience with Recovery or Volunteering? (Required)</label>
+        <textarea
+          id="vol-experience"
+          name="experience"
+          rows="4"
+          required
+         ></textarea> 
+         <button type="submit" class="button">Submit</button>
+        </form>
+        <div class="back-button" onclick="showPage('home-page')">
+          ⬅️ Back to Home
+        </div>
+      </div>
+    </div>
+    <div id="contact-page" class="page">
+      <div class="form-container">
+      <h2>Contact ECLC</h2>
+      <div class="map-container">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d253861.71266806905!2d-87.49288226143204!3d30.419463860282817!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8895c6f71e19b821%3A0xf36f913b34ce0255!2s518%20US%20Hwy%2090%2C%20Holt%2C%20FL%2032564!5e0!3m2!1sen!2sus!4v1686020473412!5m2!1sen!2sus"
+          width="100%"
+          height="250"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+      <p>
+        <a
+          href="https://www.google.com/maps/search/?api=1&query=518+US+Hwy+90+Holt+Florida+32564"
+          target="_blank"
+          rel="noopener"
+        >518 US HWY 90, Holt, FL 32564</a>
+      </p>
+      <p><a href="tel:+18506125640" class="link-button">Call Us</a></p>
+      <p><a href="mailto:emeraldcoastlifecenter@gmail.com" class="link-button">Email Us</a></p>
+      <div class="back-button" onclick="showPage('home-page')">⬅️ Back to Home</div>
+      </div>
+    </div>
+    <div id="resources-page" class="page">
+      <div class="form-container">
+      <h2>Community Resources</h2>
+      <ul class="resources">
+        <li><a href="https://emeraldcoastlifecenter.org" target="_blank">Lighthouse @ Emerald Coast Life Center</a></li>
+        <li><a href="https://havenhouserecovery.com" target="_blank">Haven House Recovery Home</a></li>
+        <li><a href="https://pathofgrace.net" target="_blank">Path of Grace Recovery</a></li>
+        <li><a href="https://988lifeline.org" target="_blank">24/7 Crisis Hotline</a></li>
+      </ul>
+      <div class="back-button" onclick="showPage('home-page')">⬅️ Back to Home</div>
+      </div>
+    </div>
+    <div id="impact-page" class="page">
+      <div class="form-container">
+      <h2>Community Impact</h2>
+      <label for="impact-range">Select Range:</label><br>
+      <select id="impact-range" onchange="updateImpact()">
+        <option value="week">This Week</option>
+        <option value="month" selected>This Month</option>
+        <option value="year">This Year</option>
+      </select>
+      <div id="impact-stats"></div>
+      <div class="back-button" onclick="showPage('home-page')">⬅️ Back to Home</div>
+      </div>
+    </div>
+    <div id="devotional-page" class="page">
+      <div class="form-container">
+      <h2>Recovery Devotional</h2>
+      <div class="dev-nav">
+        <button id="prev-day" aria-label="Previous Devotional">←</button>
+        <span id="dev-date">Loading...</span>
+        <button id="next-day" aria-label="Next Devotional">→</button>
+      </div>
+      <p id="devotional-verse">Loading verse...</p>
+      <div id="devotional-text">Loading devotional...</div>
+      <button id="share-devotional" class="button" style="max-width:200px;margin-top:1rem;">Share</button>
+      <div class="back-button" onclick="showPage('home-page')">⬅️ Back to Home</div>
+      </div>
+    </div>
+  </main>
+  <footer>Connect and Support!</footer>
+  <script src="/app.js"></script>
+</body>
+</html>
